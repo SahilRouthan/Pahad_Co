@@ -1,29 +1,75 @@
-import { useState } from 'react';
-import { MapPin, Maximize2, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { MapPin, Maximize2, X, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import { GALLERY_ITEMS } from '../data/mockData';
-import { GalleryItem } from '../types';
+import { GalleryImageItem } from '../types';
 import { BotanicalFlourish } from './common/BotanicalFlourish';
+import { api } from '../utils/api';
 
-export const EventGallery: React.FC = () => {
+interface EventGalleryProps {
+  onOpenFullGallery?: () => void;
+}
+
+export const EventGallery: React.FC<EventGalleryProps> = ({ onOpenFullGallery }) => {
   const [activeFilter, setActiveFilter] = useState<string>('All');
-  const [selectedPhoto, setSelectedPhoto] = useState<GalleryItem | null>(null);
+  const [images, setImages] = useState<GalleryImageItem[]>([]);
+  const [selectedPhoto, setSelectedPhoto] = useState<GalleryImageItem | null>(null);
 
   const categories = ['All', 'Weddings', 'Ceremonies', 'Corporate', 'Dinners', 'Birthdays'];
 
+  // Load from API
+  useEffect(() => {
+    const loadImages = async () => {
+      try {
+        const res = await api.gallery.getAll();
+        if (res && res.data && res.data.length > 0) {
+          setImages(res.data);
+        } else {
+          // Fallback to initial mock data
+          setImages(
+            GALLERY_ITEMS.map((item, idx) => ({
+              id: idx + 1,
+              title: item.title,
+              category: item.category,
+              location: item.location,
+              image_url: item.image,
+              aspect: item.aspect,
+              caption: item.caption
+            }))
+          );
+        }
+      } catch (err) {
+        console.warn('API gallery load failed, using local items:', err);
+        setImages(
+          GALLERY_ITEMS.map((item, idx) => ({
+            id: idx + 1,
+            title: item.title,
+            category: item.category,
+            location: item.location,
+            image_url: item.image,
+            aspect: item.aspect,
+            caption: item.caption
+          }))
+        );
+      }
+    };
+
+    loadImages();
+  }, []);
+
   const filteredItems = activeFilter === 'All'
-    ? GALLERY_ITEMS
-    : GALLERY_ITEMS.filter(item => item.category === activeFilter);
+    ? images
+    : images.filter((item) => item.category === activeFilter);
 
   const handleNextPhoto = () => {
     if (!selectedPhoto) return;
-    const currentIndex = filteredItems.findIndex(item => item.id === selectedPhoto.id);
+    const currentIndex = filteredItems.findIndex((item) => item.id === selectedPhoto.id);
     const nextIndex = (currentIndex + 1) % filteredItems.length;
     setSelectedPhoto(filteredItems[nextIndex]);
   };
 
   const handlePrevPhoto = () => {
     if (!selectedPhoto) return;
-    const currentIndex = filteredItems.findIndex(item => item.id === selectedPhoto.id);
+    const currentIndex = filteredItems.findIndex((item) => item.id === selectedPhoto.id);
     const prevIndex = (currentIndex - 1 + filteredItems.length) % filteredItems.length;
     setSelectedPhoto(filteredItems[prevIndex]);
   };
@@ -46,30 +92,41 @@ export const EventGallery: React.FC = () => {
           </p>
         </div>
 
-        {/* Filter Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-12">
-          {categories.map((cat) => {
-            const isActive = activeFilter === cat;
-            return (
-              <button
-                key={cat}
-                onClick={() => setActiveFilter(cat)}
-                className={`px-5 py-2 text-xs sm:text-sm font-semibold rounded-full transition-all duration-200 focus:outline-none ${
-                  isActive
-                    ? 'bg-pahad-green text-[#FFF0E1] shadow-subtle'
-                    : 'bg-white/80 hover:bg-white text-pahad-charcoal/80 border border-[#D9BB87]/40 hover:border-pahad-gold'
-                }`}
-              >
-                {cat}
-              </button>
-            );
-          })}
+        {/* Filter Tabs & Full Gallery Trigger */}
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-12">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+            {categories.map((cat) => {
+              const isActive = activeFilter === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setActiveFilter(cat)}
+                  className={`px-5 py-2 text-xs sm:text-sm font-semibold rounded-full transition-all duration-200 focus:outline-none ${
+                    isActive
+                      ? 'bg-pahad-green text-[#FFF0E1] shadow-subtle'
+                      : 'bg-white/80 hover:bg-white text-pahad-charcoal/80 border border-[#D9BB87]/40 hover:border-pahad-gold'
+                  }`}
+                >
+                  {cat}
+                </button>
+              );
+            })}
+          </div>
+
+          {onOpenFullGallery && (
+            <button
+              onClick={onOpenFullGallery}
+              className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white hover:bg-pahad-green hover:text-white text-pahad-green border border-[#D9BB87]/50 text-xs font-semibold transition-all duration-300 shadow-xs"
+            >
+              <span>Explore Complete Archives</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          )}
         </div>
 
         {/* Editorial Masonry-Style Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredItems.map((item, index) => {
-            // Give specific items visual rhythm
+          {filteredItems.slice(0, 8).map((item, index) => {
             const isTall = index % 3 === 0;
 
             return (
@@ -82,7 +139,7 @@ export const EventGallery: React.FC = () => {
               >
                 <div className={`w-full overflow-hidden ${isTall ? 'aspect-[3/4]' : 'aspect-[4/3]'}`}>
                   <img
-                    src={item.image}
+                    src={item.image_url}
                     alt={item.title}
                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
                     loading="lazy"
@@ -91,7 +148,6 @@ export const EventGallery: React.FC = () => {
 
                 {/* Overlaid Hover Vignette */}
                 <div className="absolute inset-0 bg-gradient-to-t from-pahad-green-dark/90 via-pahad-green-dark/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5 text-white">
-                  
                   <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                     <div className="flex items-center justify-between mb-2">
                       <span className="px-2.5 py-0.5 rounded-full bg-pahad-gold text-pahad-green-dark text-[10px] font-bold uppercase tracking-wider">
@@ -111,10 +167,9 @@ export const EventGallery: React.FC = () => {
                       <span>{item.location}</span>
                     </div>
                   </div>
-
                 </div>
 
-                {/* Persistent Mobile Bottom Label (always visible on touch devices) */}
+                {/* Persistent Mobile Bottom Label */}
                 <div className="p-3 bg-white border-t border-[#D9BB87]/20 sm:hidden flex items-center justify-between">
                   <div>
                     <h3 className="font-serif font-bold text-sm text-pahad-green truncate">
@@ -138,7 +193,6 @@ export const EventGallery: React.FC = () => {
       {/* Lightbox Modal */}
       {selectedPhoto && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
-          {/* Close button */}
           <button
             onClick={() => setSelectedPhoto(null)}
             className="absolute top-5 right-5 p-2 rounded-full bg-white/10 hover:bg-white/25 text-white transition-colors z-20 focus:outline-none"
@@ -147,7 +201,6 @@ export const EventGallery: React.FC = () => {
             <X className="w-6 h-6" />
           </button>
 
-          {/* Navigation Arrows */}
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -170,14 +223,13 @@ export const EventGallery: React.FC = () => {
             <ChevronRight className="w-6 h-6" />
           </button>
 
-          {/* Image & Caption Box */}
           <div
             className="relative max-w-4xl w-full bg-pahad-green-dark rounded-3xl overflow-hidden shadow-2xl border border-pahad-gold/30"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="max-h-[70vh] overflow-hidden flex items-center justify-center bg-black/40">
               <img
-                src={selectedPhoto.image}
+                src={selectedPhoto.image_url}
                 alt={selectedPhoto.title}
                 className="max-h-[70vh] w-auto max-w-full object-contain"
               />
@@ -197,9 +249,11 @@ export const EventGallery: React.FC = () => {
                 <h3 className="text-xl sm:text-2xl font-serif font-bold text-white">
                   {selectedPhoto.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-[#FFF0E1]/80 mt-1 max-w-xl">
-                  {selectedPhoto.caption}
-                </p>
+                {selectedPhoto.caption && (
+                  <p className="text-xs sm:text-sm text-[#FFF0E1]/80 mt-1 max-w-xl">
+                    {selectedPhoto.caption}
+                  </p>
+                )}
               </div>
 
               <div className="flex items-center gap-2 shrink-0">

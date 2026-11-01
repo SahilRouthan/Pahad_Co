@@ -3,7 +3,17 @@ import { Phone, Mail, Globe, Instagram, MapPin, ArrowUp } from 'lucide-react';
 import { MountainLogo } from './common/MountainLogo';
 import { BUSINESS_INFO, SIGNATURE_SERVICES } from '../data/mockData';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  onOpenFeedback?: () => void;
+  onOpenAdmin?: () => void;
+  onOpenGalleryPage?: () => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({
+  onOpenFeedback,
+  onOpenAdmin,
+  onOpenGalleryPage
+}) => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -53,6 +63,11 @@ export const Footer: React.FC = () => {
                 </a>
               </li>
               <li>
+                <a href="#reviews" className="text-[#FFF0E1]/80 hover:text-white transition-colors">
+                  Client Reviews
+                </a>
+              </li>
+              <li>
                 <a href="#about" className="text-[#FFF0E1]/80 hover:text-white transition-colors">
                   About Us
                 </a>
@@ -62,11 +77,41 @@ export const Footer: React.FC = () => {
                   Event Gallery
                 </a>
               </li>
+              {onOpenGalleryPage && (
+                <li>
+                  <button
+                    onClick={onOpenGalleryPage}
+                    className="text-[#FFF0E1]/80 hover:text-pahad-gold transition-colors text-left"
+                  >
+                    Himalayan Archives (Full Page)
+                  </button>
+                </li>
+              )}
               <li>
                 <a href="#contact" className="text-[#FFF0E1]/80 hover:text-white transition-colors">
                   Plan Your Event
                 </a>
               </li>
+              {onOpenFeedback && (
+                <li>
+                  <button
+                    onClick={onOpenFeedback}
+                    className="text-pahad-gold hover:underline transition-colors text-left"
+                  >
+                    Client Feedback Form
+                  </button>
+                </li>
+              )}
+              {onOpenAdmin && (
+                <li>
+                  <button
+                    onClick={onOpenAdmin}
+                    className="text-[#FFF0E1]/50 hover:text-pahad-gold transition-colors text-left text-[11px]"
+                  >
+                    Admin Portal
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
 

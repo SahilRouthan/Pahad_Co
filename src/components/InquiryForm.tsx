@@ -10,6 +10,7 @@ import {
 import { InquiryFormData } from '../types';
 import { BUSINESS_INFO } from '../data/mockData';
 import { BotanicalFlourish } from './common/BotanicalFlourish';
+import { api } from '../utils/api';
 
 interface InquiryFormProps {
   initialEventType?: string;
@@ -31,6 +32,7 @@ export const InquiryForm = forwardRef<HTMLDivElement, InquiryFormProps>(
     const [errors, setErrors] = useState<Partial<Record<keyof InquiryFormData, string>>>({});
     const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+    const [submitError, setSubmitError] = useState<string | null>(null);
 
     // Update if initialEventType changes externally
     useEffect(() => {
@@ -101,18 +103,23 @@ export const InquiryForm = forwardRef<HTMLDivElement, InquiryFormProps>(
       }
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
       if (!validateForm()) {
         return;
       }
 
       setIsSubmitting(true);
-      // Simulate frontend processing & payload staging
-      setTimeout(() => {
-        setIsSubmitting(false);
+      setSubmitError(null);
+
+      try {
+        await api.queries.submit(formData);
         setIsSubmitted(true);
-      }, 500);
+      } catch (err: any) {
+        setSubmitError(err.message || 'Failed to submit inquiry to server. Please try again.');
+      } finally {
+        setIsSubmitting(false);
+      }
     };
 
     const handleReset = () => {
@@ -127,6 +134,7 @@ export const InquiryForm = forwardRef<HTMLDivElement, InquiryFormProps>(
         message: ''
       });
       setErrors({});
+      setSubmitError(null);
       setIsSubmitted(false);
     };
 
@@ -462,6 +470,14 @@ export const InquiryForm = forwardRef<HTMLDivElement, InquiryFormProps>(
                     </p>
                   )}
                 </div>
+
+                {/* Submit Error Alert */}
+                {submitError && (
+                  <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4 shrink-0 text-red-500" />
+                    <span>{submitError}</span>
+                  </div>
+                )}
 
                 {/* Submit Button */}
                 <div className="pt-2">

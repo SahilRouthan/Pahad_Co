@@ -1,13 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Phone, Calendar, ArrowRight } from 'lucide-react';
+import { Menu, X, Phone, Calendar, ArrowRight, MessageSquareQuote, Shield } from 'lucide-react';
 import { MountainLogo } from './common/MountainLogo';
 import { BUSINESS_INFO } from '../data/mockData';
 
 interface NavbarProps {
   onPlanEventClick: () => void;
+  onOpenFeedback?: () => void;
+  onOpenAdmin?: () => void;
+  onOpenGalleryPage?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onPlanEventClick }) => {
+export const Navbar: React.FC<NavbarProps> = ({ 
+  onPlanEventClick,
+  onOpenFeedback,
+  onOpenAdmin,
+  onOpenGalleryPage
+}) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
@@ -16,7 +24,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onPlanEventClick }) => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
 
-      const sections = ['home', 'services', 'events', 'about', 'gallery', 'contact'];
+      const sections = ['home', 'services', 'events', 'about', 'reviews', 'gallery', 'contact'];
       const scrollPosition = window.scrollY + 180;
 
       for (const section of sections) {
@@ -41,6 +49,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onPlanEventClick }) => {
     { name: 'Services', href: '#services', id: 'services' },
     { name: 'Events', href: '#events', id: 'events' },
     { name: 'About Us', href: '#about', id: 'about' },
+    { name: 'Reviews', href: '#reviews', id: 'reviews' },
     { name: 'Gallery', href: '#gallery', id: 'gallery' },
     { name: 'Contact', href: '#contact', id: 'contact' },
   ];
@@ -88,8 +97,19 @@ export const Navbar: React.FC<NavbarProps> = ({ onPlanEventClick }) => {
               })}
             </nav>
 
-            {/* Right: Phone link & Primary CTA Button */}
-            <div className="hidden lg:flex items-center gap-4">
+            {/* Right: Phone link, Feedback & Primary CTA Button */}
+            <div className="hidden lg:flex items-center gap-3">
+              {onOpenFeedback && (
+                <button
+                  onClick={onOpenFeedback}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/70 hover:bg-white text-pahad-green border border-[#D9BB87]/40 text-xs font-semibold transition-colors"
+                  title="Share your feedback with us"
+                >
+                  <MessageSquareQuote className="w-3.5 h-3.5 text-pahad-gold-dark" />
+                  <span>Feedback</span>
+                </button>
+              )}
+
               <a
                 href={`tel:${BUSINESS_INFO.phone}`}
                 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-pahad-green hover:text-pahad-green-light transition-colors"
@@ -103,7 +123,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onPlanEventClick }) => {
 
               <button
                 onClick={onPlanEventClick}
-                className="relative inline-flex items-center justify-center px-6 py-2.5 text-sm font-medium tracking-wide text-[#FFF0E1] bg-pahad-green rounded-full overflow-hidden shadow-subtle hover:bg-pahad-green-hover transition-all duration-300 group focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pahad-green"
+                className="relative inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium tracking-wide text-[#FFF0E1] bg-pahad-green rounded-full overflow-hidden shadow-subtle hover:bg-pahad-green-hover transition-all duration-300 group focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pahad-green"
               >
                 <span className="relative z-10 flex items-center gap-2 font-medium">
                   <Calendar className="w-4 h-4 text-pahad-gold" />
@@ -111,10 +131,29 @@ export const Navbar: React.FC<NavbarProps> = ({ onPlanEventClick }) => {
                 </span>
                 <span className="absolute inset-0 bg-gradient-to-r from-pahad-green to-[#0a6b47] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </button>
+
+              {onOpenAdmin && (
+                <button
+                  onClick={onOpenAdmin}
+                  className="p-2 rounded-full hover:bg-pahad-green/10 text-pahad-green/60 hover:text-pahad-green transition-colors"
+                  title="Admin Console"
+                  aria-label="Admin Console"
+                >
+                  <Shield className="w-4 h-4" />
+                </button>
+              )}
             </div>
 
             {/* Mobile Hamburger Button */}
             <div className="flex lg:hidden items-center gap-2">
+              {onOpenFeedback && (
+                <button
+                  onClick={onOpenFeedback}
+                  className="text-xs font-medium px-2.5 py-1 bg-white border border-[#D9BB87]/40 text-pahad-green rounded-full"
+                >
+                  Feedback
+                </button>
+              )}
               <button
                 onClick={onPlanEventClick}
                 className="text-xs font-semibold px-3 py-1.5 bg-pahad-green text-[#FFF0E1] rounded-full sm:hidden"
@@ -152,6 +191,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onPlanEventClick }) => {
                   <ArrowRight className="w-4 h-4 text-pahad-gold opacity-60" />
                 </a>
               ))}
+              {onOpenGalleryPage && (
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenGalleryPage();
+                  }}
+                  className="flex items-center justify-between px-3 py-2.5 text-base font-medium text-pahad-green hover:bg-[#879B86]/10 rounded-lg transition-colors col-span-2 text-left"
+                >
+                  <span>Full Photo Archives</span>
+                  <ArrowRight className="w-4 h-4 text-pahad-gold" />
+                </button>
+              )}
             </div>
 
             <div className="pt-4 border-t border-[#D9BB87]/30 space-y-3">
