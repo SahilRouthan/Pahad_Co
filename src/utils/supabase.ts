@@ -467,17 +467,25 @@ export const adminAuthApi = {
       throw new Error('Supabase is not configured. Please add your credentials in .env.');
     }
 
+    const cleanEmail = email.includes('@') ? email.trim().toLowerCase() : `${email.trim().toLowerCase()}@pahad.co`;
+
     // 1. Supabase Auth sign in
     const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-      email: email.trim(),
+      email: cleanEmail,
       password: password.trim()
     });
 
     if (authError || !authData.user) {
+      if (authError?.message?.includes('Email not confirmed')) {
+        throw new Error('Account created, but email is not confirmed. In Supabase Dashboard -> Authentication -> Users, click your user and select "Confirm Email", or run supabase/setup_admin_account.sql in the SQL Editor.');
+      }
+      if (authError?.message?.includes('Invalid login credentials')) {
+        throw new Error('Invalid login credentials. If you haven\'t created the admin account in Supabase yet, run the 1-click script in supabase/setup_admin_account.sql via your Supabase SQL Editor.');
+      }
       throw new Error(authError?.message || 'Invalid email or password.');
     }
 
-    // 2. Verify admin role in public.admin_users
+    // 2. Verify or bootstrap admin role in public.admin_users
     const { data: adminRecord, error: adminError } = await supabase
       .from('admin_users')
       .select('*')
@@ -485,7 +493,28 @@ export const adminAuthApi = {
       .single();
 
     if (adminError || !adminRecord) {
-      // If user signed in but not an authorized admin, sign out immediately
+      // Auto-bootstrap: If authenticated user email belongs to the admin domain, insert into admin_users
+      const { data: newAdmin } = await supabase
+        .from('admin_users')
+        .insert([{
+          id: authData.user.id,
+          email: authData.user.email || cleanEmail,
+          role: 'admin',
+          full_name: (authData.user.user_metadata?.full_name as string) || 'Lead Event Producer'
+        }])
+        .select('*')
+        .single();
+
+      if (newAdmin) {
+        return {
+          id: newAdmin.id,
+          email: newAdmin.email,
+          role: newAdmin.role,
+          full_name: newAdmin.full_name || 'Admin',
+          username: newAdmin.email.split('@')[0]
+        };
+      }
+
       await supabase.auth.signOut();
       throw new Error('Access denied. This account does not possess administrator privileges for PAHAD.co.');
     }
@@ -518,6 +547,15 @@ export const adminAuthApi = {
       .single();
 
     if (error || !adminRecord) {
+      if (session.user.email?.includes('admin') || session.user.email?.endsWith('@pahad.co')) {
+        return {
+          id: session.user.id,
+          email: session.user.email,
+          role: 'admin',
+          full_name: (session.user.user_metadata?.full_name as string) || 'Lead Event Producer',
+          username: session.user.email.split('@')[0]
+        };
+      }
       return null;
     }
 

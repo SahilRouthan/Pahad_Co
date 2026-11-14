@@ -137,11 +137,14 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
           {/* Seed Credentials Hint */}
           <div className="mt-6 pt-4 border-t border-[#D9BB87]/30 text-center">
             <span className="text-[11px] font-medium text-pahad-charcoal/60 block mb-1">
-              Default Configured Credentials:
+              Default Admin Account:
             </span>
             <div className="inline-block bg-[#FBF6F0] px-3 py-1.5 rounded-lg border border-[#D9BB87]/40 text-[11px] text-pahad-green font-mono">
-              User: <span className="font-bold">admin</span> | Pass: <span className="font-bold">PahadAdmin@2026</span>
+              Email: <span className="font-bold">admin@pahad.co</span> | Pass: <span className="font-bold">PahadAdmin@2026</span>
             </div>
+            <p className="mt-2 text-[10px] text-pahad-charcoal/60">
+              Run <code className="text-pahad-green font-semibold">supabase/setup_admin_account.sql</code> in your Supabase SQL Editor to provision this account instantly.
+            </p>
           </div>
 
         </div>
