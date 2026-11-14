@@ -143,7 +143,7 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
               Email: <span className="font-bold">admin@pahad.co</span> | Pass: <span className="font-bold">PahadAdmin@2026</span>
             </div>
             <p className="mt-2 text-[10px] text-pahad-charcoal/60">
-              Run <code className="text-pahad-green font-semibold">supabase/setup_admin_account.sql</code> in your Supabase SQL Editor to provision this account instantly.
+              Run <code className="text-pahad-green font-semibold">supabase/fix_admin_account.sql</code> in your Supabase SQL Editor to provision or repair this account instantly.
             </p>
           </div>
 

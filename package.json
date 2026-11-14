@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "start": "node server/index.js",
     "test:supabase": "node scripts/test-supabase.js",
-    "test:production": "node scripts/verify-production.js"
+    "test:production": "node scripts/verify-production.js",
+    "test:admin": "node scripts/test-admin-auth.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.119.0",

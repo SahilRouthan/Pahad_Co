@@ -476,11 +476,14 @@ export const adminAuthApi = {
     });
 
     if (authError || !authData.user) {
+      if (authError?.message?.includes('Database error querying schema')) {
+        throw new Error('Supabase Auth error: Uninitialized NULL fields in auth.users detected. Please run the 1-click script in supabase/fix_admin_account.sql in your Supabase SQL Editor to repair the admin account.');
+      }
       if (authError?.message?.includes('Email not confirmed')) {
-        throw new Error('Account created, but email is not confirmed. In Supabase Dashboard -> Authentication -> Users, click your user and select "Confirm Email", or run supabase/setup_admin_account.sql in the SQL Editor.');
+        throw new Error('Account created, but email is not confirmed. In Supabase Dashboard -> Authentication -> Users, click your user and select "Confirm Email", or run supabase/fix_admin_account.sql in the SQL Editor.');
       }
       if (authError?.message?.includes('Invalid login credentials')) {
-        throw new Error('Invalid login credentials. If you haven\'t created the admin account in Supabase yet, run the 1-click script in supabase/setup_admin_account.sql via your Supabase SQL Editor.');
+        throw new Error('Invalid login credentials. Please check your credentials or run supabase/fix_admin_account.sql in your Supabase SQL Editor.');
       }
       throw new Error(authError?.message || 'Invalid email or password.');
     }
