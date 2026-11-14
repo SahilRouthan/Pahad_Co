@@ -30,6 +30,7 @@ import {
   AdminUser 
 } from '../../types';
 import { api, removeAuthToken } from '../../utils/api';
+import { isSupabaseConfigured } from '../../utils/supabase';
 import { MountainLogo } from '../common/MountainLogo';
 
 interface AdminDashboardProps {
@@ -52,7 +53,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [queries, setQueries] = useState<ClientQueryItem[]>([]);
   const [queryStatusFilter, setQueryStatusFilter] = useState('all');
   const [querySearch, setQuerySearch] = useState('');
-  const [editingNotesId, setEditingNotesId] = useState<number | null>(null);
+  const [editingNotesId, setEditingNotesId] = useState<string | number | null>(null);
   const [notesDraft, setNotesDraft] = useState('');
 
   // Reviews State
@@ -166,7 +167,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   };
 
   // Handle Query status change
-  const handleUpdateQueryStatus = async (id: number, status: string) => {
+  const handleUpdateQueryStatus = async (id: string | number, status: string) => {
     try {
       await api.queries.update(id, { status });
       showNotification(`Query #${id} status changed to ${status}`);
@@ -178,7 +179,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   };
 
   // Handle Save Query Admin Notes
-  const handleSaveQueryNotes = async (id: number) => {
+  const handleSaveQueryNotes = async (id: string | number) => {
     try {
       await api.queries.update(id, { adminNotes: notesDraft });
       setEditingNotesId(null);
@@ -190,7 +191,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   };
 
   // Handle Delete Query
-  const handleDeleteQuery = async (id: number) => {
+  const handleDeleteQuery = async (id: string | number) => {
     if (!window.confirm(`Are you sure you want to delete inquiry #${id}?`)) return;
     try {
       await api.queries.delete(id);
@@ -203,7 +204,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   };
 
   // Handle Review Status
-  const handleUpdateReviewStatus = async (id: number, status: 'approved' | 'rejected') => {
+  const handleUpdateReviewStatus = async (id: string | number, status: 'approved' | 'rejected') => {
     try {
       await api.reviews.updateStatus(id, status);
       showNotification(`Review #${id} ${status}!`);
@@ -215,7 +216,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   };
 
   // Handle Delete Review
-  const handleDeleteReview = async (id: number) => {
+  const handleDeleteReview = async (id: string | number) => {
     if (!window.confirm(`Delete review #${id}?`)) return;
     try {
       await api.reviews.delete(id);
@@ -228,7 +229,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   };
 
   // Handle Feedback Update
-  const handleUpdateFeedback = async (id: number, status: string) => {
+  const handleUpdateFeedback = async (id: string | number, status: string) => {
     try {
       await api.feedback.update(id, { status });
       showNotification(`Feedback #${id} marked as ${status}.`);
@@ -240,7 +241,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   };
 
   // Handle Delete Feedback
-  const handleDeleteFeedback = async (id: number) => {
+  const handleDeleteFeedback = async (id: string | number) => {
     if (!window.confirm(`Delete feedback #${id}?`)) return;
     try {
       await api.feedback.delete(id);
@@ -332,22 +333,22 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   // Open Edit Gallery Modal
   const openEditGalleryModal = (img: GalleryImageItem) => {
     setEditingImage(img);
-    setImageTitle(img.title);
-    setImageCategory(img.category);
-    setImageLocation(img.location);
-    setImageUrl(img.image_url);
-    setImageAspect(img.aspect);
-    setImageCaption(img.caption || '');
+    setImageTitle(img.title || '');
+    setImageCategory(img.category || 'Weddings');
+    setImageLocation(img.location || 'Dehradun Valley');
+    setImageUrl(img.image_url || img.image || '');
+    setImageAspect(img.aspect || 'landscape');
+    setImageCaption(img.caption || img.description || '');
     setImageFeatured(img.is_featured === 1);
     setImageOrder(img.display_order || 0);
     setIsAddImageOpen(true);
   };
 
   // Handle Delete Gallery Image
-  const handleDeleteGalleryImage = async (id: number) => {
+  const handleDeleteGalleryImage = async (id: string | number, storagePath?: string) => {
     if (!window.confirm(`Delete gallery image #${id}?`)) return;
     try {
-      await api.gallery.delete(id);
+      await api.gallery.delete(id, storagePath);
       showNotification(`Image #${id} deleted.`);
       loadGallery();
       loadStats();
@@ -370,7 +371,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     }
   };
 
-  const handleLogoutClick = () => {
+  const handleLogoutClick = async () => {
+    try {
+      await api.admin.logout();
+    } catch (e) {
+      console.warn('Logout error', e);
+    }
     removeAuthToken();
     onLogout();
   };
@@ -394,6 +400,15 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           </div>
 
           <div className="flex items-center gap-3">
+            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wider uppercase border ${
+              isSupabaseConfigured()
+                ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
+                : 'bg-amber-500/20 text-amber-300 border-amber-500/30'
+            }`}>
+              <span className={`w-1.5 h-1.5 rounded-full ${isSupabaseConfigured() ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`} />
+              <span className="hidden sm:inline">{isSupabaseConfigured() ? 'Supabase Live' : 'Local SQLite'}</span>
+            </span>
+
             <button
               onClick={onBackToSite}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-xs font-medium text-[#FFF0E1] transition-colors"
@@ -630,8 +645,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             ) : (
               <div className="grid grid-cols-1 gap-5">
                 {queries.map((q) => {
-                  const phoneDigits = q.phone.replace(/\D/g, '');
-                  const waUrl = `https://wa.me/${phoneDigits.length === 10 ? '91' + phoneDigits : phoneDigits}?text=Hello%20${encodeURIComponent(q.name)},%20this%20is%20PAHAD.co%20event%20management%20desk%20in%20Dehradun%20regarding%20your%20inquiry%20for%20${encodeURIComponent(q.event_type)}.`;
+                  const phoneDigits = (q.phone || '').replace(/\D/g, '');
+                  const clientName = q.name || q.customer_name || 'Client';
+                  const eventType = q.event_type || 'your event';
+                  const waUrl = `https://wa.me/${phoneDigits.length === 10 ? '91' + phoneDigits : phoneDigits}?text=Hello%20${encodeURIComponent(clientName)},%20this%20is%20PAHAD.co%20event%20management%20desk%20in%20Dehradun%20regarding%20your%20inquiry%20for%20${encodeURIComponent(eventType)}.`;
 
                   return (
                     <div
@@ -936,7 +953,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                           {f.category}
                         </span>
                         <div className="flex text-pahad-gold">
-                          {Array.from({ length: f.rating }).map((_, i) => (
+                          {Array.from({ length: f.rating || 5 }).map((_, i) => (
                             <Star key={i} className="w-3.5 h-3.5 fill-current" />
                           ))}
                         </div>
@@ -1069,7 +1086,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                       </button>
 
                       <button
-                        onClick={() => handleDeleteGalleryImage(img.id)}
+                        onClick={() => handleDeleteGalleryImage(img.id, img.storage_path)}
                         className="text-red-600 hover:text-red-800 flex items-center gap-1"
                       >
                         <Trash2 className="w-3 h-3" />

@@ -54,9 +54,10 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({
   const filteredImages = images.filter((img) => {
     const matchesCategory = activeCategory === 'All' || img.category === activeCategory;
     const matchesSearch = !searchTerm.trim() || 
-      img.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      img.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (img.caption && img.caption.toLowerCase().includes(searchTerm.toLowerCase()));
+      (img.title && img.title.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (img.location && img.location.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (img.caption && img.caption.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (img.description && img.description.toLowerCase().includes(searchTerm.toLowerCase()));
     return matchesCategory && matchesSearch;
   });
 

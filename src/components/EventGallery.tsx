@@ -27,13 +27,15 @@ export const EventGallery: React.FC<EventGalleryProps> = ({ onOpenFullGallery })
           // Fallback to initial mock data
           setImages(
             GALLERY_ITEMS.map((item, idx) => ({
-              id: idx + 1,
+              id: item.id || idx + 1,
               title: item.title,
               category: item.category,
               location: item.location,
               image_url: item.image,
+              image: item.image,
               aspect: item.aspect,
-              caption: item.caption
+              caption: item.caption,
+              display_order: idx + 1
             }))
           );
         }
@@ -41,13 +43,15 @@ export const EventGallery: React.FC<EventGalleryProps> = ({ onOpenFullGallery })
         console.warn('API gallery load failed, using local items:', err);
         setImages(
           GALLERY_ITEMS.map((item, idx) => ({
-            id: idx + 1,
+            id: item.id || idx + 1,
             title: item.title,
             category: item.category,
             location: item.location,
             image_url: item.image,
+            image: item.image,
             aspect: item.aspect,
-            caption: item.caption
+            caption: item.caption,
+            display_order: idx + 1
           }))
         );
       }

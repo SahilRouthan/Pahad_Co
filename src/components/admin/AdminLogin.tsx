@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Lock, User, AlertCircle, ArrowLeft, ShieldCheck } from 'lucide-react';
 import { api, setAuthToken } from '../../utils/api';
+import { isSupabaseConfigured } from '../../utils/supabase';
 import { MountainLogo } from '../common/MountainLogo';
 import { AdminUser } from '../../types';
 
@@ -13,7 +14,7 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
   onLoginSuccess,
   onBackToSite
 }) => {
-  const [username, setUsername] = useState('admin');
+  const [username, setUsername] = useState('admin@pahad.co');
   const [password, setPassword] = useState('PahadAdmin@2026');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -21,7 +22,7 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!username.trim() || !password.trim()) {
-      setError('Please provide both username and password.');
+      setError('Please provide both username/email and password.');
       return;
     }
 
@@ -37,7 +38,7 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
         setError(res.message || 'Login failed.');
       }
     } catch (err: any) {
-      setError(err.message || 'Invalid username or password.');
+      setError(err.message || 'Invalid credentials or unauthorized account.');
     } finally {
       setLoading(false);
     }
@@ -71,9 +72,13 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
         <p className="mt-1 text-xs text-pahad-charcoal/70">
           Sign in to manage client inquiries, review approvals, feedback, and gallery portfolio.
         </p>
+        <div className="mt-2.5 inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-[10px] font-semibold tracking-wider uppercase bg-white border border-[#D9BB87]/50 text-pahad-charcoal/80">
+          <span className={`w-1.5 h-1.5 rounded-full ${isSupabaseConfigured() ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'}`} />
+          {isSupabaseConfigured() ? 'Supabase Authentication & PostgreSQL' : 'Local Authentication Mode'}
+        </div>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4">
+      <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-md px-4">
         <div className="bg-white py-8 px-6 sm:px-10 rounded-3xl shadow-premium border border-[#D9BB87]/50">
           
           {error && (
@@ -86,7 +91,7 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider text-pahad-green mb-1.5">
-                Username
+                Email or Username
               </label>
               <div className="relative">
                 <User className="w-4 h-4 text-pahad-charcoal/40 absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -95,7 +100,7 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
                   required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  placeholder="admin"
+                  placeholder="admin@pahad.co"
                   className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#D9BB87]/50 focus:border-pahad-green text-sm bg-[#FBF6F0]/50 focus:outline-none focus:ring-2 focus:ring-pahad-green/30"
                 />
               </div>

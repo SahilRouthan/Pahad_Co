@@ -9,67 +9,85 @@ export interface InquiryFormData {
   message: string;
 }
 
-export interface ClientQueryItem {
-  id: number;
-  name: string;
-  phone: string;
+export type InquiryStatus = 'new' | 'contacted' | 'in_progress' | 'completed' | 'rejected';
+
+export interface InquiryItem {
+  id: string | number;
+  customer_name: string;
   email: string;
+  phone: string;
   event_type: string;
-  preferred_date: string;
+  event_date: string;
   event_location: string;
-  estimated_budget?: string;
+  budget?: string;
   message: string;
-  status: 'new' | 'contacted' | 'in_progress' | 'completed' | 'archived';
+  status: InquiryStatus;
   admin_notes?: string;
   created_at: string;
 }
 
-export interface CustomerReview {
-  id: number;
-  name: string;
+// Alias for backwards compatibility with UI components
+export type ClientQueryItem = InquiryItem & {
+  name?: string;
+  preferred_date?: string;
+  estimated_budget?: string;
+};
+
+export type ReviewApprovalStatus = 'pending' | 'approved' | 'rejected';
+
+export interface ReviewItem {
+  id: string | number;
+  customer_name: string;
   rating: number;
   review_text: string;
   event_type?: string;
   event_location?: string;
-  status?: 'pending' | 'approved' | 'rejected';
+  approval_status: ReviewApprovalStatus;
   approved_at?: string;
   created_at: string;
 }
 
+// Alias for backwards compatibility
+export type CustomerReview = ReviewItem & {
+  name?: string;
+  status?: ReviewApprovalStatus;
+};
+
 export interface FeedbackItem {
-  id: number;
-  name: string;
-  contact: string;
-  rating: number;
-  category: string;
+  id: string | number;
+  customer_name: string;
+  email: string;
+  feedback_type: string;
+  rating?: number;
   message: string;
   status: 'new' | 'reviewed' | 'archived';
   admin_notes?: string;
   created_at: string;
-}
-
-export interface GalleryImageItem {
-  id: number;
-  title: string;
-  category: string;
-  location: string;
-  image_url: string;
-  aspect: 'landscape' | 'portrait' | 'square';
-  caption?: string;
-  is_featured?: number;
-  display_order?: number;
-  created_at?: string;
+  // Compatibility fields
+  name?: string;
+  contact?: string;
+  category?: string;
 }
 
 export interface GalleryItem {
   id: string | number;
   title: string;
   category: string;
-  location: string;
-  image: string;
-  aspect: 'landscape' | 'portrait' | 'square';
-  caption: string;
+  image_url?: string;
+  description?: string;
+  display_order?: number;
+  storage_path?: string;
+  created_at?: string;
+  // Compatibility fields for existing UI components
+  location?: string;
+  image?: string;
+  aspect?: 'landscape' | 'portrait' | 'square';
+  caption?: string;
+  is_featured?: number;
 }
+
+// Alias for backwards compatibility
+export type GalleryImageItem = GalleryItem;
 
 export interface EventCategory {
   id: string;
@@ -111,9 +129,11 @@ export interface WhyChooseItem {
 }
 
 export interface AdminUser {
-  id: number;
-  username: string;
-  role: string;
+  id: string;
+  email: string;
+  role: 'admin' | 'super_admin';
+  full_name?: string;
+  username?: string;
 }
 
 export interface AdminStats {
@@ -122,4 +142,3 @@ export interface AdminStats {
   feedback: { total: number; new: number };
   gallery: { total: number };
 }
-
