@@ -10,24 +10,26 @@ import {
   AdminStats
 } from '../types';
 
-const env = (import.meta as unknown as { env: Record<string, string> }).env || {};
-const supabaseUrl = env.VITE_SUPABASE_URL || '';
-const supabaseAnonKey = env.VITE_SUPABASE_ANON_KEY || '';
+export const DEFAULT_SUPABASE_URL = 'https://irqqmpjgacfrpbjwdgzs.supabase.co';
+export const DEFAULT_SUPABASE_ANON_KEY = 'sb_publishable_JHW5SPISxFstJiu0EBzy5w_mo_1MBuW';
+
+// Direct import.meta.env access ensures Vite's static AST replacement works during build
+export const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || DEFAULT_SUPABASE_URL;
+export const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || DEFAULT_SUPABASE_ANON_KEY;
 
 export const isSupabaseConfigured = (): boolean => {
   return Boolean(
     supabaseUrl &&
     supabaseAnonKey &&
     supabaseUrl.startsWith('https://') &&
-    !supabaseUrl.includes('your-project-id') &&
-    supabaseAnonKey.length > 20
+    !supabaseUrl.includes('placeholder')
   );
 };
 
 // Create the Supabase client
 export const supabase: SupabaseClient = createClient(
-  supabaseUrl || 'https://placeholder.supabase.co',
-  supabaseAnonKey || 'placeholder-anon-key',
+  supabaseUrl,
+  supabaseAnonKey,
   {
     auth: {
       persistSession: true,
