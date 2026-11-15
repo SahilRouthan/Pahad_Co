@@ -66,13 +66,13 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
-      <div className="relative w-full max-w-lg bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#D9BB87]/50 max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 dark:bg-black/75 backdrop-blur-sm animate-fade-in">
+      <div className="relative w-full max-w-lg bg-white dark:bg-[#0B4636] rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#D9BB87]/50 dark:border-[#D9B477]/30 max-h-[90vh] overflow-y-auto">
         
         {/* Close Button */}
         <button
           onClick={handleReset}
-          className="absolute top-5 right-5 p-2 rounded-full bg-pahad-cream hover:bg-[#879B86]/20 text-pahad-charcoal transition-colors focus:outline-none"
+          className="absolute top-5 right-5 p-2 rounded-full bg-pahad-cream dark:bg-[#083D30] hover:bg-[#879B86]/20 dark:hover:bg-[#062F26] text-pahad-charcoal dark:text-[#FFF3E5] transition-colors focus:outline-none"
           aria-label="Close feedback dialog"
         >
           <X className="w-5 h-5" />
@@ -80,19 +80,19 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
 
         {isSuccess ? (
           <div className="text-center py-6 space-y-4">
-            <div className="w-14 h-14 rounded-full bg-pahad-green/10 text-pahad-green flex items-center justify-center mx-auto">
-              <CheckCircle2 className="w-8 h-8 text-pahad-green" />
+            <div className="w-14 h-14 rounded-full bg-pahad-green/10 dark:bg-[#083D30] text-pahad-green dark:text-[#D9B477] flex items-center justify-center mx-auto">
+              <CheckCircle2 className="w-8 h-8 text-pahad-green dark:text-[#D9B477]" />
             </div>
-            <h3 className="text-2xl font-serif font-bold text-pahad-green">
+            <h3 className="text-2xl font-serif font-bold text-pahad-green dark:text-[#FFF3E5]">
               Feedback Received
             </h3>
-            <p className="text-sm text-pahad-charcoal/80 max-w-sm mx-auto">
+            <p className="text-sm text-pahad-charcoal/80 dark:text-[#E8DFD3]/90 max-w-sm mx-auto">
               Thank you for helping us elevate the standard of hospitality across Uttarakhand. Our leadership reviews every note carefully.
             </p>
             <div className="pt-4">
               <button
                 onClick={handleReset}
-                className="px-6 py-2.5 rounded-full bg-pahad-green text-[#FFF0E1] text-xs font-semibold hover:bg-pahad-green-hover transition-colors"
+                className="px-6 py-2.5 rounded-full bg-pahad-green dark:bg-[#0B6B50] text-[#FFF0E1] text-xs font-semibold hover:bg-pahad-green-hover dark:hover:bg-[#108765] transition-colors"
               >
                 Close
               </button>
@@ -101,25 +101,25 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="flex items-center gap-3 mb-1">
-              <div className="w-10 h-10 rounded-xl bg-pahad-green/10 flex items-center justify-center text-pahad-green">
+              <div className="w-10 h-10 rounded-xl bg-pahad-green/10 dark:bg-[#083D30] flex items-center justify-center text-pahad-green dark:text-[#D9B477]">
                 <MessageSquareQuote className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-pahad-gold-dark">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-pahad-gold-dark dark:text-[#D9B477]">
                   Continuous Improvement
                 </span>
-                <h3 className="text-xl sm:text-2xl font-serif font-bold text-pahad-green">
+                <h3 className="text-xl sm:text-2xl font-serif font-bold text-pahad-green dark:text-[#FFF3E5]">
                   Client & Guest Feedback
                 </h3>
               </div>
             </div>
 
-            <p className="text-xs text-pahad-charcoal/70">
+            <p className="text-xs text-pahad-charcoal/70 dark:text-[#E8DFD3]/80">
               Your feedback guides our team in continually perfecting hospitality, catering, stage production, and venue management.
             </p>
 
             {error && (
-              <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+              <div className="p-3 rounded-xl bg-red-50 dark:bg-red-950/60 border border-red-200 dark:border-red-800/50 text-red-700 dark:text-red-300 text-xs flex items-center gap-2">
                 <AlertCircle className="w-4 h-4 shrink-0 text-red-500" />
                 <span>{error}</span>
               </div>
@@ -127,7 +127,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
 
             {/* Rating Stars */}
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-pahad-green mb-1">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-pahad-green dark:text-[#FFF3E5] mb-1">
                 Overall Experience Rating <span className="text-red-500">*</span>
               </label>
               <div className="flex items-center gap-2">
@@ -145,12 +145,12 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
                       className={`w-6 h-6 ${
                         star <= (hoverRating ?? rating)
                           ? 'fill-pahad-gold text-pahad-gold'
-                          : 'text-pahad-charcoal/20'
+                          : 'text-pahad-charcoal/20 dark:text-[#FFF3E5]/20'
                       }`}
                     />
                   </button>
                 ))}
-                <span className="text-xs font-semibold text-pahad-green ml-2">
+                <span className="text-xs font-semibold text-pahad-green dark:text-[#FFF3E5] ml-2">
                   {rating} of 5 Stars
                 </span>
               </div>
@@ -158,7 +158,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
 
             {/* Name */}
             <div>
-              <label htmlFor="fb-name" className="block text-xs font-semibold uppercase tracking-wider text-pahad-green mb-1">
+              <label htmlFor="fb-name" className="block text-xs font-semibold uppercase tracking-wider text-pahad-green dark:text-[#FFF3E5] mb-1">
                 Your Full Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -167,13 +167,13 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g. Vikram Joshi"
-                className="w-full px-3.5 py-2 rounded-xl border border-[#D9BB87]/50 focus:border-pahad-green text-xs sm:text-sm bg-[#FBF6F0]/60 focus:outline-none focus:ring-2 focus:ring-pahad-green"
+                className="w-full px-3.5 py-2 rounded-xl border border-[#D9BB87]/50 dark:border-[#D9B477]/30 focus:border-pahad-green dark:focus:border-[#D9B477] text-xs sm:text-sm bg-[#FBF6F0]/60 dark:bg-[#083D30]/80 text-[#202522] dark:text-[#FFF3E5] focus:outline-none focus:ring-2 focus:ring-pahad-green dark:focus:ring-pahad-gold/50"
               />
             </div>
 
             {/* Contact (email or phone) */}
             <div>
-              <label htmlFor="fb-contact" className="block text-xs font-semibold uppercase tracking-wider text-pahad-green mb-1">
+              <label htmlFor="fb-contact" className="block text-xs font-semibold uppercase tracking-wider text-pahad-green dark:text-[#FFF3E5] mb-1">
                 Email or Phone Number <span className="text-red-500">*</span>
               </label>
               <input
@@ -182,33 +182,33 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
                 value={contact}
                 onChange={(e) => setContact(e.target.value)}
                 placeholder="e.g. vikram@example.com or +91 98765 43210"
-                className="w-full px-3.5 py-2 rounded-xl border border-[#D9BB87]/50 focus:border-pahad-green text-xs sm:text-sm bg-[#FBF6F0]/60 focus:outline-none focus:ring-2 focus:ring-pahad-green"
+                className="w-full px-3.5 py-2 rounded-xl border border-[#D9BB87]/50 dark:border-[#D9B477]/30 focus:border-pahad-green dark:focus:border-[#D9B477] text-xs sm:text-sm bg-[#FBF6F0]/60 dark:bg-[#083D30]/80 text-[#202522] dark:text-[#FFF3E5] focus:outline-none focus:ring-2 focus:ring-pahad-green dark:focus:ring-pahad-gold/50"
               />
             </div>
 
             {/* Category Dropdown */}
             <div>
-              <label htmlFor="fb-category" className="block text-xs font-semibold uppercase tracking-wider text-pahad-green mb-1">
+              <label htmlFor="fb-category" className="block text-xs font-semibold uppercase tracking-wider text-pahad-green dark:text-[#FFF3E5] mb-1">
                 Feedback Focus Area
               </label>
               <select
                 id="fb-category"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full px-3.5 py-2 rounded-xl border border-[#D9BB87]/50 focus:border-pahad-green text-xs bg-[#FBF6F0]/60 focus:outline-none"
+                className="w-full px-3.5 py-2 rounded-xl border border-[#D9BB87]/50 dark:border-[#D9B477]/30 focus:border-pahad-green dark:focus:border-[#D9B477] text-xs bg-[#FBF6F0]/60 dark:bg-[#083D30]/80 text-[#202522] dark:text-[#FFF3E5] focus:outline-none"
               >
-                <option value="Service Quality">Overall Service Quality</option>
-                <option value="Planning & Coordination">Planning & Coordination</option>
-                <option value="Catering & Hospitality">Catering & Hospitality</option>
-                <option value="Decor & Ambience">Decor, Flowers & Ambience</option>
-                <option value="Staff & Management">Staff & On-Ground Management</option>
-                <option value="General">General Inquiries / Suggestions</option>
+                <option value="Service Quality" className="dark:bg-[#0B4636]">Overall Service Quality</option>
+                <option value="Planning & Coordination" className="dark:bg-[#0B4636]">Planning & Coordination</option>
+                <option value="Catering & Hospitality" className="dark:bg-[#0B4636]">Catering & Hospitality</option>
+                <option value="Decor & Ambience" className="dark:bg-[#0B4636]">Decor, Flowers & Ambience</option>
+                <option value="Staff & Management" className="dark:bg-[#0B4636]">Staff & On-Ground Management</option>
+                <option value="General" className="dark:bg-[#0B4636]">General Inquiries / Suggestions</option>
               </select>
             </div>
 
             {/* Feedback Message */}
             <div>
-              <label htmlFor="fb-msg" className="block text-xs font-semibold uppercase tracking-wider text-pahad-green mb-1">
+              <label htmlFor="fb-msg" className="block text-xs font-semibold uppercase tracking-wider text-pahad-green dark:text-[#FFF3E5] mb-1">
                 Your Feedback & Comments <span className="text-red-500">*</span>
               </label>
               <textarea
@@ -217,7 +217,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Tell us what impressed you, or areas where we can make events even more memorable..."
-                className="w-full px-3.5 py-2 rounded-xl border border-[#D9BB87]/50 focus:border-pahad-green text-xs sm:text-sm bg-[#FBF6F0]/60 focus:outline-none focus:ring-2 focus:ring-pahad-green"
+                className="w-full px-3.5 py-2 rounded-xl border border-[#D9BB87]/50 dark:border-[#D9B477]/30 focus:border-pahad-green dark:focus:border-[#D9B477] text-xs sm:text-sm bg-[#FBF6F0]/60 dark:bg-[#083D30]/80 text-[#202522] dark:text-[#FFF3E5] focus:outline-none focus:ring-2 focus:ring-pahad-green dark:focus:ring-pahad-gold/50"
               />
             </div>
 
@@ -226,7 +226,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-pahad-green text-[#FFF0E1] font-semibold text-xs sm:text-sm hover:bg-pahad-green-hover transition-colors shadow-subtle disabled:opacity-70 focus:outline-none"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-pahad-green dark:bg-[#0B6B50] text-[#FFF0E1] font-semibold text-xs sm:text-sm hover:bg-pahad-green-hover dark:hover:bg-[#108765] transition-colors shadow-subtle disabled:opacity-70 focus:outline-none"
               >
                 {isSubmitting ? (
                   <span>Recording Feedback...</span>

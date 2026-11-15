@@ -13,11 +13,11 @@ export const WhatsAppButton: React.FC = () => {
     <div className="fixed bottom-6 right-6 z-40 flex items-center gap-3">
       {/* Tooltip / Bubble */}
       {showTooltip && (
-        <div className="hidden sm:flex items-center gap-2 bg-white text-pahad-charcoal text-xs font-semibold px-4 py-2 rounded-2xl shadow-premium border border-[#D9BB87]/40 animate-fade-in">
+        <div className="hidden sm:flex items-center gap-2 bg-white dark:bg-[#0B4636] text-pahad-charcoal dark:text-[#FFF3E5] text-xs font-semibold px-4 py-2 rounded-2xl shadow-premium border border-[#D9BB87]/40 dark:border-[#D9B477]/30 animate-fade-in">
           <span>Chat with Dehradun Team</span>
           <button
             onClick={() => setShowTooltip(false)}
-            className="text-pahad-charcoal/50 hover:text-pahad-charcoal"
+            className="text-pahad-charcoal/50 dark:text-[#FFF3E5]/60 hover:text-pahad-charcoal dark:hover:text-[#FFF3E5] transition-colors"
             aria-label="Close tooltip"
           >
             <X className="w-3.5 h-3.5" />

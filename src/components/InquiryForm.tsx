@@ -172,67 +172,67 @@ export const InquiryForm = forwardRef<HTMLDivElement, InquiryFormProps>(
     };
 
     return (
-      <section id="contact" ref={ref} className="py-20 md:py-28 bg-[#FFF0E1] relative">
+      <section id="contact" ref={ref} className="py-20 md:py-28 bg-[#FFF0E1] dark:bg-[#062F26] relative">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Header */}
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#879B86]/20 border border-[#879B86]/40 text-pahad-green text-xs font-semibold uppercase tracking-wider mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#879B86]/20 dark:bg-[#0B4636]/70 border border-[#879B86]/40 dark:border-[#D9B477]/30 text-pahad-green dark:text-[#D9B477] text-xs font-semibold uppercase tracking-wider mb-3">
               <span>Begin Your Journey</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-pahad-green mb-4">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-pahad-green dark:text-[#FFF3E5] mb-4">
               Let’s Plan Your Next Event
             </h2>
             <BotanicalFlourish variant="divider" />
-            <p className="text-base sm:text-lg text-pahad-charcoal/80">
+            <p className="text-base sm:text-lg text-pahad-charcoal/80 dark:text-[#E8DFD3]">
               Share your details below. Our planning team will review your requirements and coordinate with you within 24 hours.
             </p>
           </div>
 
           {/* Form Surface */}
-          <div className="bg-white rounded-3xl p-6 sm:p-10 border border-[#D9BB87]/40 shadow-premium relative">
+          <div className="bg-white dark:bg-[#0B4636] rounded-3xl p-6 sm:p-10 border border-[#D9BB87]/40 dark:border-[#D9B477]/30 shadow-premium relative">
             
             {isSubmitted ? (
               /* Success / Staged State */
               <div className="text-center py-8 space-y-6">
-                <div className="w-16 h-16 rounded-full bg-pahad-green/10 text-pahad-green flex items-center justify-center mx-auto shadow-inner">
-                  <CheckCircle2 className="w-8 h-8 text-pahad-green" />
+                <div className="w-16 h-16 rounded-full bg-pahad-green/10 dark:bg-[#083D30] text-pahad-green dark:text-[#D9B477] flex items-center justify-center mx-auto shadow-inner">
+                  <CheckCircle2 className="w-8 h-8 text-pahad-green dark:text-[#D9B477]" />
                 </div>
 
                 <div>
-                  <h3 className="text-2xl sm:text-3xl font-serif font-bold text-pahad-green mb-2">
+                  <h3 className="text-2xl sm:text-3xl font-serif font-bold text-pahad-green dark:text-[#FFF3E5] mb-2">
                     Inquiry Prepared Successfully!
                   </h3>
-                  <p className="text-sm sm:text-base text-pahad-charcoal/80 max-w-lg mx-auto">
-                    Thank you, <strong className="text-pahad-green">{formData.name}</strong>. Your inquiry for <strong className="text-pahad-green">{formData.eventType}</strong> in {formData.eventLocation} on {formData.preferredDate} is structured and ready.
+                  <p className="text-sm sm:text-base text-pahad-charcoal/80 dark:text-[#E8DFD3]/90 max-w-lg mx-auto">
+                    Thank you, <strong className="text-pahad-green dark:text-[#D9B477]">{formData.name}</strong>. Your inquiry for <strong className="text-pahad-green dark:text-[#D9B477]">{formData.eventType}</strong> in {formData.eventLocation} on {formData.preferredDate} is structured and ready.
                   </p>
                 </div>
 
                 {/* Staged Summary Card */}
-                <div className="bg-[#FBF6F0] p-5 rounded-2xl border border-[#D9BB87]/40 text-left max-w-lg mx-auto text-xs sm:text-sm space-y-2">
-                  <div className="flex justify-between border-b border-[#D9BB87]/20 pb-1.5">
-                    <span className="text-pahad-charcoal/60">Client:</span>
-                    <span className="font-semibold text-pahad-green">{formData.name}</span>
+                <div className="bg-[#FBF6F0] dark:bg-[#083D30]/80 p-5 rounded-2xl border border-[#D9BB87]/40 dark:border-[#D9B477]/30 text-left max-w-lg mx-auto text-xs sm:text-sm space-y-2">
+                  <div className="flex justify-between border-b border-[#D9BB87]/20 dark:border-[#D9B477]/20 pb-1.5">
+                    <span className="text-pahad-charcoal/60 dark:text-[#A3B5A2]">Client:</span>
+                    <span className="font-semibold text-pahad-green dark:text-[#FFF3E5]">{formData.name}</span>
                   </div>
-                  <div className="flex justify-between border-b border-[#D9BB87]/20 pb-1.5">
-                    <span className="text-pahad-charcoal/60">Phone:</span>
-                    <span className="font-semibold text-pahad-green">{formData.phone}</span>
+                  <div className="flex justify-between border-b border-[#D9BB87]/20 dark:border-[#D9B477]/20 pb-1.5">
+                    <span className="text-pahad-charcoal/60 dark:text-[#A3B5A2]">Phone:</span>
+                    <span className="font-semibold text-pahad-green dark:text-[#FFF3E5]">{formData.phone}</span>
                   </div>
-                  <div className="flex justify-between border-b border-[#D9BB87]/20 pb-1.5">
-                    <span className="text-pahad-charcoal/60">Email:</span>
-                    <span className="font-semibold text-pahad-green">{formData.email}</span>
+                  <div className="flex justify-between border-b border-[#D9BB87]/20 dark:border-[#D9B477]/20 pb-1.5">
+                    <span className="text-pahad-charcoal/60 dark:text-[#A3B5A2]">Email:</span>
+                    <span className="font-semibold text-pahad-green dark:text-[#FFF3E5]">{formData.email}</span>
                   </div>
-                  <div className="flex justify-between border-b border-[#D9BB87]/20 pb-1.5">
-                    <span className="text-pahad-charcoal/60">Event:</span>
-                    <span className="font-semibold text-pahad-green">{formData.eventType}</span>
+                  <div className="flex justify-between border-b border-[#D9BB87]/20 dark:border-[#D9B477]/20 pb-1.5">
+                    <span className="text-pahad-charcoal/60 dark:text-[#A3B5A2]">Event:</span>
+                    <span className="font-semibold text-pahad-green dark:text-[#FFF3E5]">{formData.eventType}</span>
                   </div>
-                  <div className="flex justify-between border-b border-[#D9BB87]/20 pb-1.5">
-                    <span className="text-pahad-charcoal/60">Date & Location:</span>
-                    <span className="font-semibold text-pahad-green">{formData.preferredDate} • {formData.eventLocation}</span>
+                  <div className="flex justify-between border-b border-[#D9BB87]/20 dark:border-[#D9B477]/20 pb-1.5">
+                    <span className="text-pahad-charcoal/60 dark:text-[#A3B5A2]">Date & Location:</span>
+                    <span className="font-semibold text-pahad-green dark:text-[#FFF3E5]">{formData.preferredDate} • {formData.eventLocation}</span>
                   </div>
                   <div className="flex justify-between pb-1">
-                    <span className="text-pahad-charcoal/60">Estimated Budget:</span>
-                    <span className="font-semibold text-pahad-green">{formData.estimatedBudget}</span>
+                    <span className="text-pahad-charcoal/60 dark:text-[#A3B5A2]">Estimated Budget:</span>
+                    <span className="font-semibold text-pahad-green dark:text-[#FFF3E5]">{formData.estimatedBudget}</span>
                   </div>
                 </div>
 
@@ -250,7 +250,7 @@ export const InquiryForm = forwardRef<HTMLDivElement, InquiryFormProps>(
 
                   <a
                     href={generateMailtoUrl()}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-pahad-green text-[#FFF0E1] font-semibold text-sm hover:bg-pahad-green-hover transition-colors shadow-subtle"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-pahad-green dark:bg-[#0B6B50] text-[#FFF0E1] font-semibold text-sm hover:bg-pahad-green-hover dark:hover:bg-[#108765] transition-colors shadow-subtle"
                   >
                     <Mail className="w-4 h-4 text-pahad-gold" />
                     <span>Send via Email Client</span>
@@ -260,7 +260,7 @@ export const InquiryForm = forwardRef<HTMLDivElement, InquiryFormProps>(
                 <div className="pt-4">
                   <button
                     onClick={handleReset}
-                    className="inline-flex items-center gap-1.5 text-xs text-pahad-charcoal/70 hover:text-pahad-green transition-colors font-medium"
+                    className="inline-flex items-center gap-1.5 text-xs text-pahad-charcoal/70 dark:text-[#E8DFD3]/70 hover:text-pahad-green dark:hover:text-[#D9B477] transition-colors font-medium"
                   >
                     <RotateCcw className="w-3.5 h-3.5" />
                     <span>Submit another inquiry / Edit details</span>
@@ -274,7 +274,7 @@ export const InquiryForm = forwardRef<HTMLDivElement, InquiryFormProps>(
                 {/* Row 1: Name & Phone */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="name" className="block text-xs font-semibold uppercase tracking-wider text-pahad-green mb-2">
+                    <label htmlFor="name" className="block text-xs font-semibold uppercase tracking-wider text-pahad-green dark:text-[#FFF3E5] mb-2">
                       Full Name <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -284,12 +284,12 @@ export const InquiryForm = forwardRef<HTMLDivElement, InquiryFormProps>(
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="e.g. Sahil Verma"
-                      className={`w-full px-4 py-3 rounded-xl border text-sm transition-all focus:outline-none focus:ring-2 focus:ring-pahad-green bg-[#FBF6F0]/60 ${
-                        errors.name ? 'border-red-400 bg-red-50/40' : 'border-[#D9BB87]/50 focus:border-pahad-green'
+                      className={`w-full px-4 py-3 rounded-xl border text-sm transition-all focus:outline-none focus:ring-2 focus:ring-pahad-green dark:focus:ring-pahad-gold/50 bg-[#FBF6F0]/60 dark:bg-[#083D30]/80 text-[#202522] dark:text-[#FFF3E5] placeholder:text-pahad-charcoal/40 dark:placeholder:text-[#FFF3E5]/40 ${
+                        errors.name ? 'border-red-400 bg-red-50/40 dark:bg-red-950/40' : 'border-[#D9BB87]/50 dark:border-[#D9B477]/30 focus:border-pahad-green dark:focus:border-[#D9B477]'
                       }`}
                     />
                     {errors.name && (
-                      <p className="mt-1 text-xs text-red-600 flex items-center gap-1">
+                      <p className="mt-1 text-xs text-red-600 dark:text-red-400 flex items-center gap-1">
                         <AlertCircle className="w-3.5 h-3.5" />
                         <span>{errors.name}</span>
                       </p>
@@ -297,11 +297,11 @@ export const InquiryForm = forwardRef<HTMLDivElement, InquiryFormProps>(
                   </div>
 
                   <div>
-                    <label htmlFor="phone" className="block text-xs font-semibold uppercase tracking-wider text-pahad-green mb-2">
+                    <label htmlFor="phone" className="block text-xs font-semibold uppercase tracking-wider text-pahad-green dark:text-[#FFF3E5] mb-2">
                       Phone Number <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
-                      <span className="absolute left-3.5 top-3.5 text-pahad-charcoal/50 text-xs font-medium">
+                      <span className="absolute left-3.5 top-3.5 text-pahad-charcoal/50 dark:text-[#FFF3E5]/50 text-xs font-medium">
                         +91
                       </span>
                       <input
@@ -311,13 +311,13 @@ export const InquiryForm = forwardRef<HTMLDivElement, InquiryFormProps>(
                         value={formData.phone}
                         onChange={handleChange}
                         placeholder="87551 05353"
-                        className={`w-full pl-12 pr-4 py-3 rounded-xl border text-sm transition-all focus:outline-none focus:ring-2 focus:ring-pahad-green bg-[#FBF6F0]/60 ${
-                          errors.phone ? 'border-red-400 bg-red-50/40' : 'border-[#D9BB87]/50 focus:border-pahad-green'
+                        className={`w-full pl-12 pr-4 py-3 rounded-xl border text-sm transition-all focus:outline-none focus:ring-2 focus:ring-pahad-green dark:focus:ring-pahad-gold/50 bg-[#FBF6F0]/60 dark:bg-[#083D30]/80 text-[#202522] dark:text-[#FFF3E5] placeholder:text-pahad-charcoal/40 dark:placeholder:text-[#FFF3E5]/40 ${
+                          errors.phone ? 'border-red-400 bg-red-50/40 dark:bg-red-950/40' : 'border-[#D9BB87]/50 dark:border-[#D9B477]/30 focus:border-pahad-green dark:focus:border-[#D9B477]'
                         }`}
                       />
                     </div>
                     {errors.phone && (
-                      <p className="mt-1 text-xs text-red-600 flex items-center gap-1">
+                      <p className="mt-1 text-xs text-red-600 dark:text-red-400 flex items-center gap-1">
                         <AlertCircle className="w-3.5 h-3.5" />
                         <span>{errors.phone}</span>
                       </p>
@@ -328,7 +328,7 @@ export const InquiryForm = forwardRef<HTMLDivElement, InquiryFormProps>(
                 {/* Row 2: Email & Event Type */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-wider text-pahad-green mb-2">
+                    <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-wider text-pahad-green dark:text-[#FFF3E5] mb-2">
                       Email Address <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -338,12 +338,12 @@ export const InquiryForm = forwardRef<HTMLDivElement, InquiryFormProps>(
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="e.g. sahil@example.com"
-                      className={`w-full px-4 py-3 rounded-xl border text-sm transition-all focus:outline-none focus:ring-2 focus:ring-pahad-green bg-[#FBF6F0]/60 ${
-                        errors.email ? 'border-red-400 bg-red-50/40' : 'border-[#D9BB87]/50 focus:border-pahad-green'
+                      className={`w-full px-4 py-3 rounded-xl border text-sm transition-all focus:outline-none focus:ring-2 focus:ring-pahad-green dark:focus:ring-pahad-gold/50 bg-[#FBF6F0]/60 dark:bg-[#083D30]/80 text-[#202522] dark:text-[#FFF3E5] placeholder:text-pahad-charcoal/40 dark:placeholder:text-[#FFF3E5]/40 ${
+                        errors.email ? 'border-red-400 bg-red-50/40 dark:bg-red-950/40' : 'border-[#D9BB87]/50 dark:border-[#D9B477]/30 focus:border-pahad-green dark:focus:border-[#D9B477]'
                       }`}
                     />
                     {errors.email && (
-                      <p className="mt-1 text-xs text-red-600 flex items-center gap-1">
+                      <p className="mt-1 text-xs text-red-600 dark:text-red-400 flex items-center gap-1">
                         <AlertCircle className="w-3.5 h-3.5" />
                         <span>{errors.email}</span>
                       </p>
@@ -351,7 +351,7 @@ export const InquiryForm = forwardRef<HTMLDivElement, InquiryFormProps>(
                   </div>
 
                   <div>
-                    <label htmlFor="eventType" className="block text-xs font-semibold uppercase tracking-wider text-pahad-green mb-2">
+                    <label htmlFor="eventType" className="block text-xs font-semibold uppercase tracking-wider text-pahad-green dark:text-[#FFF3E5] mb-2">
                       Event Type <span className="text-red-500">*</span>
                     </label>
                     <select
@@ -359,17 +359,17 @@ export const InquiryForm = forwardRef<HTMLDivElement, InquiryFormProps>(
                       name="eventType"
                       value={formData.eventType}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl border border-[#D9BB87]/50 focus:border-pahad-green text-sm transition-all focus:outline-none focus:ring-2 focus:ring-pahad-green bg-[#FBF6F0]/60"
+                      className="w-full px-4 py-3 rounded-xl border border-[#D9BB87]/50 dark:border-[#D9B477]/30 focus:border-pahad-green dark:focus:border-[#D9B477] text-sm transition-all focus:outline-none focus:ring-2 focus:ring-pahad-green dark:focus:ring-pahad-gold/50 bg-[#FBF6F0]/60 dark:bg-[#083D30]/80 text-[#202522] dark:text-[#FFF3E5]"
                     >
-                      <option value="Destination Weddings">Destination Wedding (Uttarakhand)</option>
-                      <option value="Weddings">Wedding (Bespoke & Traditional)</option>
-                      <option value="Traditional Ceremonies">Traditional Ceremony / Haldi / Mehendi</option>
-                      <option value="Corporate Events">Corporate Summit / Leadership Retreat</option>
-                      <option value="Birthday Celebrations">Birthday & Milestone Celebration</option>
-                      <option value="School & College Events">School / College Annual Fest</option>
-                      <option value="Private Parties">Private Party / Cocktail Sundowner</option>
-                      <option value="Catering & Decoration Only">Catering & Decor Services Only</option>
-                      <option value="Other Celebrations">Other Custom Event</option>
+                      <option value="Destination Weddings" className="dark:bg-[#0B4636]">Destination Wedding (Uttarakhand)</option>
+                      <option value="Weddings" className="dark:bg-[#0B4636]">Wedding (Bespoke & Traditional)</option>
+                      <option value="Traditional Ceremonies" className="dark:bg-[#0B4636]">Traditional Ceremony / Haldi / Mehendi</option>
+                      <option value="Corporate Events" className="dark:bg-[#0B4636]">Corporate Summit / Leadership Retreat</option>
+                      <option value="Birthday Celebrations" className="dark:bg-[#0B4636]">Birthday & Milestone Celebration</option>
+                      <option value="School & College Events" className="dark:bg-[#0B4636]">School / College Annual Fest</option>
+                      <option value="Private Parties" className="dark:bg-[#0B4636]">Private Party / Cocktail Sundowner</option>
+                      <option value="Catering & Decoration Only" className="dark:bg-[#0B4636]">Catering & Decor Services Only</option>
+                      <option value="Other Celebrations" className="dark:bg-[#0B4636]">Other Custom Event</option>
                     </select>
                   </div>
                 </div>
@@ -377,7 +377,7 @@ export const InquiryForm = forwardRef<HTMLDivElement, InquiryFormProps>(
                 {/* Row 3: Date, Location, Budget */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                   <div>
-                    <label htmlFor="preferredDate" className="block text-xs font-semibold uppercase tracking-wider text-pahad-green mb-2">
+                    <label htmlFor="preferredDate" className="block text-xs font-semibold uppercase tracking-wider text-pahad-green dark:text-[#FFF3E5] mb-2">
                       Preferred Date <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -386,12 +386,12 @@ export const InquiryForm = forwardRef<HTMLDivElement, InquiryFormProps>(
                       name="preferredDate"
                       value={formData.preferredDate}
                       onChange={handleChange}
-                      className={`w-full px-4 py-3 rounded-xl border text-sm transition-all focus:outline-none focus:ring-2 focus:ring-pahad-green bg-[#FBF6F0]/60 ${
-                        errors.preferredDate ? 'border-red-400 bg-red-50/40' : 'border-[#D9BB87]/50 focus:border-pahad-green'
+                      className={`w-full px-4 py-3 rounded-xl border text-sm transition-all focus:outline-none focus:ring-2 focus:ring-pahad-green dark:focus:ring-pahad-gold/50 bg-[#FBF6F0]/60 dark:bg-[#083D30]/80 text-[#202522] dark:text-[#FFF3E5] ${
+                        errors.preferredDate ? 'border-red-400 bg-red-50/40 dark:bg-red-950/40' : 'border-[#D9BB87]/50 dark:border-[#D9B477]/30 focus:border-pahad-green dark:focus:border-[#D9B477]'
                       }`}
                     />
                     {errors.preferredDate && (
-                      <p className="mt-1 text-xs text-red-600 flex items-center gap-1">
+                      <p className="mt-1 text-xs text-red-600 dark:text-red-400 flex items-center gap-1">
                         <AlertCircle className="w-3.5 h-3.5" />
                         <span>{errors.preferredDate}</span>
                       </p>
@@ -399,7 +399,7 @@ export const InquiryForm = forwardRef<HTMLDivElement, InquiryFormProps>(
                   </div>
 
                   <div>
-                    <label htmlFor="eventLocation" className="block text-xs font-semibold uppercase tracking-wider text-pahad-green mb-2">
+                    <label htmlFor="eventLocation" className="block text-xs font-semibold uppercase tracking-wider text-pahad-green dark:text-[#FFF3E5] mb-2">
                       Event Location <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -409,12 +409,12 @@ export const InquiryForm = forwardRef<HTMLDivElement, InquiryFormProps>(
                       value={formData.eventLocation}
                       onChange={handleChange}
                       placeholder="e.g. Dehradun / Mussoorie / Rishikesh"
-                      className={`w-full px-4 py-3 rounded-xl border text-sm transition-all focus:outline-none focus:ring-2 focus:ring-pahad-green bg-[#FBF6F0]/60 ${
-                        errors.eventLocation ? 'border-red-400 bg-red-50/40' : 'border-[#D9BB87]/50 focus:border-pahad-green'
+                      className={`w-full px-4 py-3 rounded-xl border text-sm transition-all focus:outline-none focus:ring-2 focus:ring-pahad-green dark:focus:ring-pahad-gold/50 bg-[#FBF6F0]/60 dark:bg-[#083D30]/80 text-[#202522] dark:text-[#FFF3E5] placeholder:text-pahad-charcoal/40 dark:placeholder:text-[#FFF3E5]/40 ${
+                        errors.eventLocation ? 'border-red-400 bg-red-50/40 dark:bg-red-950/40' : 'border-[#D9BB87]/50 dark:border-[#D9B477]/30 focus:border-pahad-green dark:focus:border-[#D9B477]'
                       }`}
                     />
                     {errors.eventLocation && (
-                      <p className="mt-1 text-xs text-red-600 flex items-center gap-1">
+                      <p className="mt-1 text-xs text-red-600 dark:text-red-400 flex items-center gap-1">
                         <AlertCircle className="w-3.5 h-3.5" />
                         <span>{errors.eventLocation}</span>
                       </p>
@@ -422,7 +422,7 @@ export const InquiryForm = forwardRef<HTMLDivElement, InquiryFormProps>(
                   </div>
 
                   <div>
-                    <label htmlFor="estimatedBudget" className="block text-xs font-semibold uppercase tracking-wider text-pahad-green mb-2">
+                    <label htmlFor="estimatedBudget" className="block text-xs font-semibold uppercase tracking-wider text-pahad-green dark:text-[#FFF3E5] mb-2">
                       Estimated Budget
                     </label>
                     <select
@@ -430,14 +430,14 @@ export const InquiryForm = forwardRef<HTMLDivElement, InquiryFormProps>(
                       name="estimatedBudget"
                       value={formData.estimatedBudget}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl border border-[#D9BB87]/50 focus:border-pahad-green text-sm transition-all focus:outline-none focus:ring-2 focus:ring-pahad-green bg-[#FBF6F0]/60"
+                      className="w-full px-4 py-3 rounded-xl border border-[#D9BB87]/50 dark:border-[#D9B477]/30 focus:border-pahad-green dark:focus:border-[#D9B477] text-sm transition-all focus:outline-none focus:ring-2 focus:ring-pahad-green dark:focus:ring-pahad-gold/50 bg-[#FBF6F0]/60 dark:bg-[#083D30]/80 text-[#202522] dark:text-[#FFF3E5]"
                     >
-                      <option value="Under ₹2 Lakhs">Under ₹2 Lakhs</option>
-                      <option value="₹2L - ₹5L">₹2L - ₹5L</option>
-                      <option value="₹5L - ₹10L">₹5L - ₹10L</option>
-                      <option value="₹10L - ₹25L">₹10L - ₹25L</option>
-                      <option value="₹25L - ₹50L">₹25L - ₹50L</option>
-                      <option value="₹50L+ (Luxury Scale)">₹50L+ (Luxury Scale)</option>
+                      <option value="Under ₹2 Lakhs" className="dark:bg-[#0B4636]">Under ₹2 Lakhs</option>
+                      <option value="₹2L - ₹5L" className="dark:bg-[#0B4636]">₹2L - ₹5L</option>
+                      <option value="₹5L - ₹10L" className="dark:bg-[#0B4636]">₹5L - ₹10L</option>
+                      <option value="₹10L - ₹25L" className="dark:bg-[#0B4636]">₹10L - ₹25L</option>
+                      <option value="₹25L - ₹50L" className="dark:bg-[#0B4636]">₹25L - ₹50L</option>
+                      <option value="₹50L+ (Luxury Scale)" className="dark:bg-[#0B4636]">₹50L+ (Luxury Scale)</option>
                     </select>
                   </div>
                 </div>
@@ -445,10 +445,10 @@ export const InquiryForm = forwardRef<HTMLDivElement, InquiryFormProps>(
                 {/* Row 4: Message / Requirements */}
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <label htmlFor="message" className="block text-xs font-semibold uppercase tracking-wider text-pahad-green">
+                    <label htmlFor="message" className="block text-xs font-semibold uppercase tracking-wider text-pahad-green dark:text-[#FFF3E5]">
                       Message / Event Requirements <span className="text-red-500">*</span>
                     </label>
-                    <span className="text-[11px] text-pahad-charcoal/60">
+                    <span className="text-[11px] text-pahad-charcoal/60 dark:text-[#A3B5A2]">
                       {formData.message.length} chars
                     </span>
                   </div>
@@ -459,12 +459,12 @@ export const InquiryForm = forwardRef<HTMLDivElement, InquiryFormProps>(
                     value={formData.message}
                     onChange={handleChange}
                     placeholder="Tell us about your expected guest count, vibe, venue preferences, floral styling, or any specific mountain destination dreams..."
-                    className={`w-full px-4 py-3 rounded-xl border text-sm transition-all focus:outline-none focus:ring-2 focus:ring-pahad-green bg-[#FBF6F0]/60 ${
-                      errors.message ? 'border-red-400 bg-red-50/40' : 'border-[#D9BB87]/50 focus:border-pahad-green'
+                    className={`w-full px-4 py-3 rounded-xl border text-sm transition-all focus:outline-none focus:ring-2 focus:ring-pahad-green dark:focus:ring-pahad-gold/50 bg-[#FBF6F0]/60 dark:bg-[#083D30]/80 text-[#202522] dark:text-[#FFF3E5] placeholder:text-pahad-charcoal/40 dark:placeholder:text-[#FFF3E5]/40 ${
+                      errors.message ? 'border-red-400 bg-red-50/40 dark:bg-red-950/40' : 'border-[#D9BB87]/50 dark:border-[#D9B477]/30 focus:border-pahad-green dark:focus:border-[#D9B477]'
                     }`}
                   />
                   {errors.message && (
-                    <p className="mt-1 text-xs text-red-600 flex items-center gap-1">
+                    <p className="mt-1 text-xs text-red-600 dark:text-red-400 flex items-center gap-1">
                       <AlertCircle className="w-3.5 h-3.5" />
                       <span>{errors.message}</span>
                     </p>
@@ -473,7 +473,7 @@ export const InquiryForm = forwardRef<HTMLDivElement, InquiryFormProps>(
 
                 {/* Submit Error Alert */}
                 {submitError && (
-                  <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+                  <div className="p-3.5 rounded-xl bg-red-50 dark:bg-red-950/60 border border-red-200 dark:border-red-800/50 text-red-700 dark:text-red-300 text-xs flex items-center gap-2">
                     <AlertCircle className="w-4 h-4 shrink-0 text-red-500" />
                     <span>{submitError}</span>
                   </div>
@@ -484,7 +484,7 @@ export const InquiryForm = forwardRef<HTMLDivElement, InquiryFormProps>(
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-pahad-green text-[#FFF0E1] font-bold text-base hover:bg-pahad-green-hover transition-all duration-300 shadow-premium disabled:opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pahad-green"
+                    className="w-full inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-pahad-green dark:bg-[#0B6B50] text-[#FFF0E1] font-bold text-base hover:bg-pahad-green-hover dark:hover:bg-[#108765] transition-all duration-300 shadow-premium disabled:opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pahad-green dark:focus:ring-offset-[#062F26]"
                   >
                     {isSubmitting ? (
                       <span className="flex items-center gap-2">
@@ -498,7 +498,7 @@ export const InquiryForm = forwardRef<HTMLDivElement, InquiryFormProps>(
                       </>
                     )}
                   </button>
-                  <p className="text-center text-[11px] text-pahad-charcoal/60 mt-3">
+                  <p className="text-center text-[11px] text-pahad-charcoal/60 dark:text-[#A3B5A2] mt-3">
                     Directly handled by PAHAD.co management desk in Dehradun. No spam, ever.
                   </p>
                 </div>

@@ -3,16 +3,150 @@
 @tailwind utilities;
 
 @layer base {
+  :root,
+  [data-theme="light"] {
+    /* Brand Colors */
+    --brand-primary: #064E3B; /* Forest Green */
+    --brand-secondary: #0B6B50; /* Emerald Green */
+    --brand-dark: #043C2E; /* Deep Green */
+    --brand-light: #0a6b47;
+    
+    /* Backgrounds */
+    --bg-primary: #FFF0E1; /* Warm Cream */
+    --bg-secondary: #FBF6F0; /* Soft Beige */
+    --bg-card: #FFFFFF; /* Warm White */
+    --bg-card-hover: #FFFFFF;
+    --bg-elevated: #FFFFFF;
+    
+    /* Text */
+    --text-primary: #064E3B; /* Deep Forest Green for primary headings */
+    --text-secondary: #202522; /* Charcoal for body copy */
+    --text-muted: #5D735C; /* Sage Muted */
+    --text-inverse: #FFF0E1;
+    
+    /* Accents & Borders */
+    --accent-gold: #D9B477; /* Champagne Gold */
+    --accent-gold-dark: #B89253;
+    --accent-gold-light: #F2E2C4;
+    --accent-sage: #879B86;
+    --border-color: rgba(217, 187, 135, 0.35); /* Subtle Champagne Gold */
+    --border-gold: rgba(217, 187, 135, 0.5);
+    
+    /* Form & UI Elements */
+    --input-bg: rgba(251, 246, 240, 0.65);
+    --input-border: rgba(217, 187, 135, 0.5);
+    --nav-bg: rgba(255, 240, 225, 0.85);
+    --nav-bg-scrolled: rgba(255, 240, 225, 0.95);
+    --modal-bg: #FFFFFF;
+    --modal-overlay: rgba(0, 0, 0, 0.6);
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, #064E3B 0%, #0B6B50 100%);
+    --gradient-secondary: linear-gradient(180deg, #FFF0E1 0%, #FBF6F0 100%);
+    --gradient-gold: linear-gradient(135deg, #D9B477 0%, #F2E2C4 50%, #B89253 100%);
+    
+    /* Shadows */
+    --shadow-subtle: 0 4px 20px -2px rgba(6, 75, 50, 0.05), 0 2px 6px -1px rgba(6, 75, 50, 0.03);
+    --shadow-premium: 0 20px 40px -15px rgba(6, 75, 50, 0.08), 0 0 1px 1px rgba(217, 187, 135, 0.25);
+    --shadow-premium-hover: 0 25px 50px -12px rgba(6, 75, 50, 0.15), 0 0 1px 1px rgba(217, 187, 135, 0.4);
+  }
+
+  [data-theme="dark"],
+  .dark {
+    /* Brand Colors */
+    --brand-primary: #0B6B50; /* Emerald Green */
+    --brand-secondary: #064E3B; /* Forest Green */
+    --brand-dark: #042720; /* Deepest Forest */
+    --brand-light: #108765;
+    
+    /* Backgrounds */
+    --bg-primary: #062F26; /* Deep luxury forest green */
+    --bg-secondary: #083D30; /* Secondary deep green */
+    --bg-card: #0B4636; /* Elevated luxury dark emerald cards & modals */
+    --bg-card-hover: #0E5240;
+    --bg-elevated: #0B4636;
+    
+    /* Text */
+    --text-primary: #FFF3E5; /* Warm Cream */
+    --text-secondary: #E8DFD3; /* Muted Warm Beige */
+    --text-muted: #A3B5A2; /* Soft Sage Muted */
+    --text-inverse: #062F26;
+    
+    /* Accents & Borders */
+    --accent-gold: #D9B477; /* Champagne Gold */
+    --accent-gold-dark: #F2E2C4; /* Brightened Gold for dark contrast */
+    --accent-gold-light: #FFF0D4;
+    --accent-sage: #879B86;
+    --border-color: rgba(217, 180, 119, 0.25); /* Subtle dark gold */
+    --border-gold: rgba(217, 180, 119, 0.4);
+    
+    /* Form & UI Elements */
+    --input-bg: rgba(8, 61, 48, 0.7);
+    --input-border: rgba(217, 180, 119, 0.35);
+    --nav-bg: rgba(6, 47, 38, 0.85);
+    --nav-bg-scrolled: rgba(6, 47, 38, 0.95);
+    --modal-bg: #0B4636;
+    --modal-overlay: rgba(0, 0, 0, 0.75);
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, #0B6B50 0%, #064E3B 100%);
+    --gradient-secondary: linear-gradient(180deg, #062F26 0%, #083D30 100%);
+    --gradient-gold: linear-gradient(135deg, #F2E2C4 0%, #D9B477 50%, #B89253 100%);
+    
+    /* Shadows */
+    --shadow-subtle: 0 4px 20px -2px rgba(0, 0, 0, 0.35);
+    --shadow-premium: 0 20px 40px -15px rgba(0, 0, 0, 0.5), 0 0 1px 1px rgba(217, 180, 119, 0.2);
+    --shadow-premium-hover: 0 25px 50px -12px rgba(0, 0, 0, 0.65), 0 0 1px 1px rgba(217, 180, 119, 0.35);
+  }
+
   html {
     scroll-behavior: smooth;
     font-family: 'Plus Jakarta Sans', Inter, -apple-system, BlinkMacSystemFont, sans-serif;
-    color: #202522;
-    background-color: #FFF0E1;
+    color: var(--text-secondary);
+    background-color: var(--bg-primary);
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-secondary);
   }
 
   ::selection {
-    background-color: #064B32;
+    background-color: var(--brand-primary);
     color: #FFF0E1;
+  }
+
+  [data-theme="dark"] ::selection,
+  .dark ::selection {
+    background-color: var(--accent-gold);
+    color: #062F26;
+  }
+}
+
+/* Smooth Theme Transitions */
+body, header, nav, main, footer, section, div, button, a, input, select, textarea {
+  transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+option {
+  background-color: #FFFFFF;
+  color: #043C2E;
+}
+
+[data-theme="dark"] option,
+.dark option {
+  background-color: #0B4636;
+  color: #FFF3E5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
@@ -22,16 +156,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #FFF0E1;
+  background: var(--bg-primary);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #879B86;
+  background: var(--accent-sage);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #064B32;
+  background: var(--brand-primary);
 }
 
 /* Mountain & botanical ambient pattern */
@@ -42,14 +176,29 @@
     radial-gradient(circle at 50% 50%, rgba(6, 75, 50, 0.03) 0%, transparent 60%);
 }
 
+[data-theme="dark"] .bg-pahad-mesh,
+.dark .bg-pahad-mesh {
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(217, 180, 119, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(11, 107, 80, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(4, 60, 46, 0.3) 0%, transparent 60%);
+}
+
 .gold-gradient-text {
-  background: linear-gradient(135deg, #064B32 0%, #0a6b47 50%, #D9BB87 100%);
+  background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 50%, var(--accent-gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+[data-theme="dark"] .gold-gradient-text,
+.dark .gold-gradient-text {
+  background: linear-gradient(135deg, #F2E2C4 0%, #D9B477 50%, #FFFFFF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .champagne-border {
-  border-color: rgba(217, 187, 135, 0.35);
+  border-color: var(--border-color);
 }
 
 /* Subtle image zoom on hover */

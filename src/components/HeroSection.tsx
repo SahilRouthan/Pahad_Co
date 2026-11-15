@@ -12,9 +12,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onPlanEventClick }) =>
       className="relative pt-28 pb-16 md:pt-36 md:pb-24 lg:pt-40 lg:pb-28 overflow-hidden bg-pahad-mesh"
     >
       {/* Mountain outline backdrop */}
-      <div className="absolute inset-0 pointer-events-none select-none overflow-hidden opacity-25">
+      <div className="absolute inset-0 pointer-events-none select-none overflow-hidden opacity-25 dark:opacity-20">
         <svg
-          className="absolute -bottom-10 left-0 w-[160%] sm:w-full h-auto text-pahad-sage/30"
+          className="absolute -bottom-10 left-0 w-[160%] sm:w-full h-auto text-pahad-sage/30 dark:text-[#0B6B50]/30"
           viewBox="0 0 1440 320"
           fill="currentColor"
           preserveAspectRatio="none"
@@ -29,40 +29,40 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onPlanEventClick }) =>
           {/* Left Column: Typography & CTAs */}
           <div className="lg:col-span-6 flex flex-col justify-center text-left">
             {/* Mountain location badge */}
-            <div className="inline-flex items-center gap-2 self-start px-3.5 py-1.5 rounded-full bg-[#879B86]/20 border border-[#879B86]/40 text-pahad-green text-xs font-semibold uppercase tracking-widest mb-6">
-              <MapPin className="w-3.5 h-3.5 text-pahad-green" />
+            <div className="inline-flex items-center gap-2 self-start px-3.5 py-1.5 rounded-full bg-[#879B86]/20 dark:bg-[#0B4636]/70 border border-[#879B86]/40 dark:border-[#D9B477]/30 text-pahad-green dark:text-[#D9B477] text-xs font-semibold uppercase tracking-widest mb-6">
+              <MapPin className="w-3.5 h-3.5 text-pahad-green dark:text-[#D9B477]" />
               <span>Dehradun • Mussoorie • Rishikesh</span>
             </div>
 
             {/* Small introductory uppercase tag */}
             <div className="flex items-center gap-3 mb-4">
-              <span className="h-[1px] w-8 bg-pahad-gold" />
-              <span className="text-xs sm:text-sm font-semibold tracking-[0.25em] uppercase text-pahad-gold-dark font-sans">
+              <span className="h-[1px] w-8 bg-pahad-gold dark:bg-[#D9B477]" />
+              <span className="text-xs sm:text-sm font-semibold tracking-[0.25em] uppercase text-pahad-gold-dark dark:text-[#D9B477] font-sans">
                 CRAFTING EXTRAORDINARY EXPERIENCES
               </span>
             </div>
 
             {/* Main Heading */}
-            <h1 className="text-4xl sm:text-5xl xl:text-6xl font-serif font-bold text-pahad-green leading-[1.12] mb-6 tracking-tight">
+            <h1 className="text-4xl sm:text-5xl xl:text-6xl font-serif font-bold text-pahad-green dark:text-[#FFF3E5] leading-[1.12] mb-6 tracking-tight">
               You Dream It, <br />
-              <span className="italic font-normal font-serif text-[#085A3C]">
+              <span className="italic font-normal font-serif text-[#085A3C] dark:text-[#D9B477]">
                 We Make It{' '}
               </span>
-              <span className="relative inline-block text-pahad-green underline decoration-pahad-gold/60 decoration-wavy decoration-1 underline-offset-8">
+              <span className="relative inline-block text-pahad-green dark:text-[#FFF3E5] underline decoration-pahad-gold/60 dark:decoration-[#D9B477]/60 decoration-wavy decoration-1 underline-offset-8">
                 Extraordinary.
               </span>
             </h1>
 
             {/* Supporting Copy */}
-            <p className="text-base sm:text-lg text-pahad-charcoal/85 leading-relaxed max-w-xl mb-8 font-normal">
-              At <strong className="font-semibold text-pahad-green">PAHAD.co</strong>, we turn your special moments into unforgettable experiences. From planning to perfection, we handle every detail so you can enjoy every moment.
+            <p className="text-base sm:text-lg text-pahad-charcoal/85 dark:text-[#E8DFD3] leading-relaxed max-w-xl mb-8 font-normal">
+              At <strong className="font-semibold text-pahad-green dark:text-[#D9B477]">PAHAD.co</strong>, we turn your special moments into unforgettable experiences. From planning to perfection, we handle every detail so you can enjoy every moment.
             </p>
 
             {/* Dual CTAs */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-8">
               <button
                 onClick={onPlanEventClick}
-                className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-pahad-green text-[#FFF0E1] font-semibold text-base shadow-premium hover:bg-pahad-green-hover transition-all duration-300 transform hover:-translate-y-0.5 group focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pahad-green"
+                className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-pahad-green text-[#FFF0E1] font-semibold text-base shadow-premium hover:bg-pahad-green-hover dark:hover:bg-[#0B6B50] transition-all duration-300 transform hover:-translate-y-0.5 group focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pahad-green dark:focus:ring-offset-[#062F26]"
               >
                 <Calendar className="w-5 h-5 text-pahad-gold group-hover:rotate-12 transition-transform duration-300" />
                 <span>Plan Your Event</span>
@@ -70,24 +70,24 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onPlanEventClick }) =>
 
               <a
                 href="#services"
-                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-white/70 hover:bg-white text-pahad-green border border-[#D9BB87]/50 font-medium text-base shadow-subtle hover:shadow-md transition-all duration-300 text-center"
+                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-white/70 dark:bg-[#0B4636]/70 hover:bg-white dark:hover:bg-[#0E5240] text-pahad-green dark:text-[#FFF3E5] border border-[#D9BB87]/50 dark:border-[#D9B477]/35 font-medium text-base shadow-subtle hover:shadow-md transition-all duration-300 text-center"
               >
                 <span>Explore Our Services</span>
-                <Compass className="w-4 h-4 text-pahad-sage-dark" />
+                <Compass className="w-4 h-4 text-pahad-sage-dark dark:text-[#A3B5A2]" />
               </a>
             </div>
 
             {/* Trust Statement */}
-            <div className="pt-6 border-t border-[#D9BB87]/30 flex flex-wrap items-center gap-y-2 gap-x-6 text-xs sm:text-sm text-pahad-charcoal/80">
+            <div className="pt-6 border-t border-[#D9BB87]/30 dark:border-[#D9B477]/20 flex flex-wrap items-center gap-y-2 gap-x-6 text-xs sm:text-sm text-pahad-charcoal/80 dark:text-[#E8DFD3]/80">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-pahad-green" />
+                <CheckCircle2 className="w-4 h-4 text-pahad-green dark:text-[#D9B477]" />
                 <span className="font-medium">Thoughtfully Planned.</span>
               </div>
               <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-pahad-gold-dark" />
+                <Sparkles className="w-4 h-4 text-pahad-gold-dark dark:text-[#D9B477]" />
                 <span className="font-medium">Beautifully Executed.</span>
               </div>
-              <div className="text-pahad-sage-dark font-medium italic hidden sm:inline">
+              <div className="text-pahad-sage-dark dark:text-[#A3B5A2] font-medium italic hidden sm:inline">
                 “Memories that last forever”
               </div>
             </div>
@@ -98,7 +98,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onPlanEventClick }) =>
             <div className="relative mx-auto max-w-lg lg:max-w-none">
               
               {/* Luxury Main Wedding Visual */}
-              <div className="relative rounded-2xl overflow-hidden shadow-premium border-2 border-white/80 bg-white group">
+              <div className="relative rounded-2xl overflow-hidden shadow-premium border-2 border-white/80 dark:border-[#D9B477]/30 bg-white dark:bg-[#0B4636] group">
                 <div className="aspect-[4/3] sm:aspect-[16/11] overflow-hidden">
                   <img
                     src="/hero-wedding.jpg"
@@ -108,19 +108,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onPlanEventClick }) =>
                   />
                 </div>
                 {/* Subtle gradient vignette */}
-                <div className="absolute inset-0 bg-gradient-to-t from-pahad-green-dark/80 via-transparent to-black/10" />
+                <div className="absolute inset-0 bg-gradient-to-t from-pahad-green-dark/80 dark:from-[#042720]/90 via-transparent to-black/10" />
 
                 {/* Overlaid caption badge */}
-                <div className="absolute bottom-4 left-4 right-4 p-3 sm:p-4 rounded-xl bg-white/90 backdrop-blur-md border border-[#D9BB87]/40 shadow-subtle flex items-center justify-between">
+                <div className="absolute bottom-4 left-4 right-4 p-3 sm:p-4 rounded-xl bg-white/90 dark:bg-[#0B4636]/90 backdrop-blur-md border border-[#D9BB87]/40 dark:border-[#D9B477]/30 shadow-subtle flex items-center justify-between">
                   <div>
-                    <span className="text-[10px] sm:text-xs uppercase tracking-wider font-semibold text-pahad-green block">
+                    <span className="text-[10px] sm:text-xs uppercase tracking-wider font-semibold text-pahad-green dark:text-[#D9B477] block">
                       Himalayan Destination Wedding
                     </span>
-                    <h2 className="text-sm sm:text-base font-serif font-bold text-pahad-charcoal">
+                    <h2 className="text-sm sm:text-base font-serif font-bold text-pahad-charcoal dark:text-[#FFF3E5]">
                       Mussoorie Ridge Ceremony
                     </h2>
                   </div>
-                  <span className="text-xs px-2.5 py-1 rounded-full bg-pahad-green/10 text-pahad-green font-medium">
+                  <span className="text-xs px-2.5 py-1 rounded-full bg-pahad-green/10 dark:bg-[#083D30] text-pahad-green dark:text-[#D9B477] font-medium">
                     Uttarakhand
                   </span>
                 </div>
@@ -129,7 +129,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onPlanEventClick }) =>
               {/* Supporting 4-Image Grid below */}
               <div className="grid grid-cols-4 gap-2 sm:gap-3 mt-3">
                 {/* 1. Mandap Setup */}
-                <div className="group relative rounded-xl overflow-hidden shadow-subtle border border-white/80 aspect-square">
+                <div className="group relative rounded-xl overflow-hidden shadow-subtle border border-white/80 dark:border-[#D9B477]/30 aspect-square">
                   <img
                     src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=400&q=80"
                     alt="Floral wedding mandap setup"
@@ -143,7 +143,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onPlanEventClick }) =>
                 </div>
 
                 {/* 2. Corporate Summit */}
-                <div className="group relative rounded-xl overflow-hidden shadow-subtle border border-white/80 aspect-square">
+                <div className="group relative rounded-xl overflow-hidden shadow-subtle border border-white/80 dark:border-[#D9B477]/30 aspect-square">
                   <img
                     src="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=400&q=80"
                     alt="Corporate event production in Rishikesh"
@@ -157,7 +157,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onPlanEventClick }) =>
                 </div>
 
                 {/* 3. Birthday Celebration */}
-                <div className="group relative rounded-xl overflow-hidden shadow-subtle border border-white/80 aspect-square">
+                <div className="group relative rounded-xl overflow-hidden shadow-subtle border border-white/80 dark:border-[#D9B477]/30 aspect-square">
                   <img
                     src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=400&q=80"
                     alt="Birthday milestone celebration setup"
@@ -171,7 +171,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onPlanEventClick }) =>
                 </div>
 
                 {/* 4. Elegant Dinner Setup */}
-                <div className="group relative rounded-xl overflow-hidden shadow-subtle border border-white/80 aspect-square">
+                <div className="group relative rounded-xl overflow-hidden shadow-subtle border border-white/80 dark:border-[#D9B477]/30 aspect-square">
                   <img
                     src="https://images.unsplash.com/photo-1544077960-604201fe74bc?auto=format&fit=crop&w=400&q=80"
                     alt="Candlelight dinner arrangement in pine woods"
@@ -186,16 +186,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onPlanEventClick }) =>
               </div>
 
               {/* Floating Decorative Gold Badge */}
-              <div className="absolute -top-4 -right-4 sm:-top-6 sm:-right-6 bg-white/95 backdrop-blur-md rounded-2xl p-3 sm:p-4 shadow-premium border border-[#D9BB87]/50 max-w-[170px] hidden sm:block animate-pulse duration-1000">
+              <div className="absolute -top-4 -right-4 sm:-top-6 sm:-right-6 bg-white/95 dark:bg-[#0B4636]/95 backdrop-blur-md rounded-2xl p-3 sm:p-4 shadow-premium border border-[#D9BB87]/50 dark:border-[#D9B477]/30 max-w-[170px] hidden sm:block animate-pulse duration-1000">
                 <div className="flex items-center gap-2 mb-1">
-                  <div className="w-6 h-6 rounded-full bg-pahad-gold/20 flex items-center justify-center text-pahad-gold-dark">
+                  <div className="w-6 h-6 rounded-full bg-pahad-gold/20 flex items-center justify-center text-pahad-gold-dark dark:text-[#D9B477]">
                     <Sparkles className="w-3.5 h-3.5" />
                   </div>
-                  <span className="text-[11px] font-bold text-pahad-green uppercase tracking-wider">
+                  <span className="text-[11px] font-bold text-pahad-green dark:text-[#D9B477] uppercase tracking-wider">
                     Uttarakhand
                   </span>
                 </div>
-                <p className="text-[10px] text-pahad-charcoal/80 leading-tight">
+                <p className="text-[10px] text-pahad-charcoal/80 dark:text-[#E8DFD3]/85 leading-tight">
                   100% Bespoke Mountain Event Design
                 </p>
               </div>

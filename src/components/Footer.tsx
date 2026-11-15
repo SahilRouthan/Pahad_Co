@@ -19,7 +19,7 @@ export const Footer: React.FC<FooterProps> = ({
   };
 
   return (
-    <footer className="bg-pahad-green-dark text-[#FFF0E1] pt-16 pb-12 border-t border-pahad-gold/30 relative overflow-hidden">
+    <footer className="bg-pahad-green-dark dark:bg-[#042720] text-[#FFF0E1] pt-16 pb-12 border-t border-pahad-gold/30 dark:border-[#D9B477]/25 relative overflow-hidden">
       {/* Decorative subtle mountain silhouette outline at top of footer */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         

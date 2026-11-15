@@ -79,19 +79,19 @@ export const EventGallery: React.FC<EventGalleryProps> = ({ onOpenFullGallery })
   };
 
   return (
-    <section id="gallery" className="py-20 md:py-28 bg-[#FFF0E1] relative">
+    <section id="gallery" className="py-20 md:py-28 bg-[#FFF0E1] dark:bg-[#062F26] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#879B86]/20 border border-[#879B86]/40 text-pahad-green text-xs font-semibold uppercase tracking-wider mb-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#879B86]/20 dark:bg-[#0B4636]/70 border border-[#879B86]/40 dark:border-[#D9B477]/30 text-pahad-green dark:text-[#D9B477] text-xs font-semibold uppercase tracking-wider mb-3">
             <span>Visual Portfolio</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-pahad-green mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-pahad-green dark:text-[#FFF3E5] mb-4">
             Moments We Make Memorable
           </h2>
           <BotanicalFlourish variant="divider" />
-          <p className="text-lg text-pahad-charcoal/80 font-normal">
+          <p className="text-lg text-pahad-charcoal/80 dark:text-[#E8DFD3] font-normal">
             A glimpse into the celebrations, vows, and gatherings we have brought to life across the majestic peaks and valleys of Uttarakhand.
           </p>
         </div>
@@ -107,8 +107,8 @@ export const EventGallery: React.FC<EventGalleryProps> = ({ onOpenFullGallery })
                   onClick={() => setActiveFilter(cat)}
                   className={`px-5 py-2 text-xs sm:text-sm font-semibold rounded-full transition-all duration-200 focus:outline-none ${
                     isActive
-                      ? 'bg-pahad-green text-[#FFF0E1] shadow-subtle'
-                      : 'bg-white/80 hover:bg-white text-pahad-charcoal/80 border border-[#D9BB87]/40 hover:border-pahad-gold'
+                      ? 'bg-pahad-green dark:bg-[#0B6B50] text-[#FFF0E1] shadow-subtle'
+                      : 'bg-white/80 dark:bg-[#0B4636] hover:bg-white dark:hover:bg-[#0E5240] text-pahad-charcoal/80 dark:text-[#FFF3E5]/80 border border-[#D9BB87]/40 dark:border-[#D9B477]/30 hover:border-pahad-gold dark:hover:border-[#D9B477]'
                   }`}
                 >
                   {cat}
@@ -120,7 +120,7 @@ export const EventGallery: React.FC<EventGalleryProps> = ({ onOpenFullGallery })
           {onOpenFullGallery && (
             <button
               onClick={onOpenFullGallery}
-              className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white hover:bg-pahad-green hover:text-white text-pahad-green border border-[#D9BB87]/50 text-xs font-semibold transition-all duration-300 shadow-xs"
+              className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white dark:bg-[#0B4636] hover:bg-pahad-green dark:hover:bg-[#0B6B50] hover:text-white text-pahad-green dark:text-[#FFF3E5] border border-[#D9BB87]/50 dark:border-[#D9B477]/30 text-xs font-semibold transition-all duration-300 shadow-xs"
             >
               <span>Explore Complete Archives</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -137,7 +137,7 @@ export const EventGallery: React.FC<EventGalleryProps> = ({ onOpenFullGallery })
               <div
                 key={item.id}
                 onClick={() => setSelectedPhoto(item)}
-                className={`group relative rounded-2xl overflow-hidden cursor-pointer bg-white border border-[#D9BB87]/30 shadow-subtle hover:shadow-premium transition-all duration-500 transform hover:-translate-y-1.5 ${
+                className={`group relative rounded-2xl overflow-hidden cursor-pointer bg-white dark:bg-[#0B4636] border border-[#D9BB87]/30 dark:border-[#D9B477]/25 shadow-subtle hover:shadow-premium transition-all duration-500 transform hover:-translate-y-1.5 ${
                   isTall ? 'sm:row-span-2' : ''
                 }`}
               >
@@ -151,7 +151,7 @@ export const EventGallery: React.FC<EventGalleryProps> = ({ onOpenFullGallery })
                 </div>
 
                 {/* Overlaid Hover Vignette */}
-                <div className="absolute inset-0 bg-gradient-to-t from-pahad-green-dark/90 via-pahad-green-dark/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5 text-white">
+                <div className="absolute inset-0 bg-gradient-to-t from-pahad-green-dark/90 dark:from-[#042720]/95 via-pahad-green-dark/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5 text-white">
                   <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                     <div className="flex items-center justify-between mb-2">
                       <span className="px-2.5 py-0.5 rounded-full bg-pahad-gold text-pahad-green-dark text-[10px] font-bold uppercase tracking-wider">
@@ -174,16 +174,16 @@ export const EventGallery: React.FC<EventGalleryProps> = ({ onOpenFullGallery })
                 </div>
 
                 {/* Persistent Mobile Bottom Label */}
-                <div className="p-3 bg-white border-t border-[#D9BB87]/20 sm:hidden flex items-center justify-between">
+                <div className="p-3 bg-white dark:bg-[#0B4636] border-t border-[#D9BB87]/20 dark:border-[#D9B477]/20 sm:hidden flex items-center justify-between">
                   <div>
-                    <h3 className="font-serif font-bold text-sm text-pahad-green truncate">
+                    <h3 className="font-serif font-bold text-sm text-pahad-green dark:text-[#FFF3E5] truncate">
                       {item.title}
                     </h3>
-                    <span className="text-[11px] text-pahad-charcoal/60">
+                    <span className="text-[11px] text-pahad-charcoal/60 dark:text-[#A3B5A2]">
                       {item.location}
                     </span>
                   </div>
-                  <span className="text-[10px] font-semibold text-pahad-gold-dark uppercase">
+                  <span className="text-[10px] font-semibold text-pahad-gold-dark dark:text-[#D9B477] uppercase">
                     {item.category}
                   </span>
                 </div>
@@ -228,7 +228,7 @@ export const EventGallery: React.FC<EventGalleryProps> = ({ onOpenFullGallery })
           </button>
 
           <div
-            className="relative max-w-4xl w-full bg-pahad-green-dark rounded-3xl overflow-hidden shadow-2xl border border-pahad-gold/30"
+            className="relative max-w-4xl w-full bg-pahad-green-dark dark:bg-[#062F26] rounded-3xl overflow-hidden shadow-2xl border border-pahad-gold/30 dark:border-[#D9B477]/30"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="max-h-[70vh] overflow-hidden flex items-center justify-center bg-black/40">
@@ -239,7 +239,7 @@ export const EventGallery: React.FC<EventGalleryProps> = ({ onOpenFullGallery })
               />
             </div>
 
-            <div className="p-6 bg-pahad-green text-[#FFF0E1] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="p-6 bg-pahad-green dark:bg-[#0B4636] text-[#FFF0E1] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   <span className="px-2 py-0.5 text-[10px] font-bold uppercase rounded bg-pahad-gold text-pahad-green-dark">

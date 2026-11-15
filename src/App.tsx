@@ -17,8 +17,9 @@ import { AdminLogin } from './components/admin/AdminLogin';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { AdminUser } from './types';
 import { api, getAuthToken, removeAuthToken } from './utils/api';
+import { ThemeProvider } from './context/ThemeContext';
 
-export function App() {
+function AppContent() {
   const [currentView, setCurrentView] = useState<'home' | 'gallery' | 'admin'>('home');
   const [selectedEventType, setSelectedEventType] = useState<string>('Destination Weddings');
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
@@ -111,7 +112,7 @@ export function App() {
   if (currentView === 'admin') {
     if (checkingAuth) {
       return (
-        <div className="min-h-screen bg-[#FFF0E1] flex items-center justify-center text-pahad-green text-sm font-semibold">
+        <div className="min-h-screen bg-[#FFF0E1] dark:bg-[#062F26] flex items-center justify-center text-pahad-green dark:text-[#D9B477] text-sm font-semibold">
           Verifying security session...
         </div>
       );
@@ -147,7 +148,7 @@ export function App() {
 
   // Default: Main Landing Page
   return (
-    <div className="min-h-screen bg-[#FFF0E1] text-[#202522] flex flex-col font-sans selection:bg-pahad-green selection:text-[#FFF0E1]">
+    <div className="min-h-screen bg-[#FFF0E1] dark:bg-[#062F26] text-[#202522] dark:text-[#FFF3E5] flex flex-col font-sans selection:bg-pahad-green dark:selection:bg-[#D9B477] selection:text-[#FFF0E1] dark:selection:text-[#062F26] transition-colors duration-300">
       {/* Navigation */}
       <Navbar 
         onPlanEventClick={() => scrollToInquiry()} 
@@ -224,6 +225,14 @@ export function App() {
         onClose={() => setIsFeedbackOpen(false)}
       />
     </div>
+  );
+}
+
+export function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
 

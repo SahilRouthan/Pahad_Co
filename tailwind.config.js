@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: ['class', '[data-theme="dark"]'],
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -7,6 +8,19 @@ export default {
   theme: {
     extend: {
       colors: {
+        theme: {
+          bg: 'var(--bg-primary)',
+          'bg-secondary': 'var(--bg-secondary)',
+          card: 'var(--bg-card)',
+          'card-hover': 'var(--bg-card-hover)',
+          text: 'var(--text-primary)',
+          'text-secondary': 'var(--text-secondary)',
+          'text-muted': 'var(--text-muted)',
+          border: 'var(--border-color)',
+          'border-gold': 'var(--border-gold)',
+          gold: 'var(--accent-gold)',
+          'gold-dark': 'var(--accent-gold-dark)',
+        },
         pahad: {
           cream: '#FFF0E1',
           'cream-light': '#FDF9F5',

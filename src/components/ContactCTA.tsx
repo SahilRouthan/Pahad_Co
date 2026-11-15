@@ -1,3 +1,4 @@
+import React from 'react';
 import { Calendar, PhoneCall } from 'lucide-react';
 import { BotanicalFlourish } from './common/BotanicalFlourish';
 import { BUSINESS_INFO } from '../data/mockData';
@@ -12,7 +13,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
   onContactClick
 }) => {
   return (
-    <section className="relative py-20 md:py-28 bg-pahad-green overflow-hidden text-[#FFF0E1]">
+    <section className="relative py-20 md:py-28 bg-pahad-green dark:bg-[#062F26] border-t border-pahad-gold/30 dark:border-[#D9B477]/25 overflow-hidden text-[#FFF0E1]">
       {/* Decorative ambient background rings and mountain peaks */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden opacity-10">
         <BotanicalFlourish variant="mountain-ridge" className="text-white absolute bottom-0 left-0" />

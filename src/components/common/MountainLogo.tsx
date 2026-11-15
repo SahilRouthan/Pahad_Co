@@ -1,17 +1,28 @@
 import React from 'react';
+import { useTheme } from '../../context/ThemeContext';
 
 interface MountainLogoProps {
-  variant?: 'dark' | 'light';
+  variant?: 'dark' | 'light' | 'auto';
   size?: 'sm' | 'md' | 'lg';
   showSubtitle?: boolean;
 }
 
 export const MountainLogo: React.FC<MountainLogoProps> = ({
-  variant = 'dark',
+  variant = 'auto',
   size = 'md',
   showSubtitle = true
 }) => {
-  const isDark = variant === 'dark';
+  let isSiteDark = false;
+  try {
+    const themeContext = useTheme();
+    isSiteDark = themeContext.isDark;
+  } catch {
+    // If rendered outside ThemeProvider
+    isSiteDark = false;
+  }
+
+  // Determines if the logo text should be dark green (for light backgrounds) or cream (for dark backgrounds)
+  const isDarkText = variant === 'auto' ? !isSiteDark : variant === 'dark';
 
   const sizeStyles = {
     sm: { icon: 'w-7 h-7', title: 'text-lg', sub: 'text-[9px] tracking-[0.25em]' },
@@ -36,39 +47,39 @@ export const MountainLogo: React.FC<MountainLogoProps> = ({
             cx="24"
             cy="24"
             r="22"
-            stroke={isDark ? '#D9BB87' : '#D9BB87'}
+            stroke="#D9B477"
             strokeWidth="1.2"
             strokeDasharray="2 2"
-            className="opacity-60"
+            className="opacity-70"
           />
           {/* Mountain Peaks with gold and forest green */}
           <path
             d="M8 35L21 16L30 28L36 21L42 35H8Z"
-            fill={isDark ? 'url(#greenGradient)' : 'url(#goldGradientLight)'}
+            fill={isDarkText ? 'url(#greenGradient)' : 'url(#goldGradientDarkTheme)'}
             opacity="0.95"
           />
           {/* Main Peak Highlight */}
           <path
             d="M21 16L27 28L21 35L16 28L21 16Z"
-            fill="#D9BB87"
-            opacity="0.75"
+            fill="#D9B477"
+            opacity="0.8"
           />
           {/* Valley river / path accent */}
           <path
             d="M21 31L23 35M25 33L27 35"
-            stroke={isDark ? '#FFF0E1' : '#064B32'}
+            stroke={isDarkText ? '#FFF0E1' : '#042720'}
             strokeWidth="1.5"
             strokeLinecap="round"
           />
           
           <defs>
             <linearGradient id="greenGradient" x1="24" y1="16" x2="24" y2="35" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#0a6b47" />
-              <stop offset="1" stopColor="#064B32" />
+              <stop stopColor="#0B6B50" />
+              <stop offset="1" stopColor="#064E3B" />
             </linearGradient>
-            <linearGradient id="goldGradientLight" x1="24" y1="16" x2="24" y2="35" gradientUnits="userSpaceOnUse">
+            <linearGradient id="goldGradientDarkTheme" x1="24" y1="16" x2="24" y2="35" gradientUnits="userSpaceOnUse">
               <stop stopColor="#F2E2C4" />
-              <stop offset="1" stopColor="#D9BB87" />
+              <stop offset="1" stopColor="#D9B477" />
             </linearGradient>
           </defs>
         </svg>
@@ -79,14 +90,14 @@ export const MountainLogo: React.FC<MountainLogoProps> = ({
         <div className="flex items-baseline">
           <span
             className={`font-serif font-bold tracking-tight ${currentSize.title} ${
-              isDark ? 'text-pahad-green' : 'text-[#FFF0E1]'
+              isDarkText ? 'text-pahad-green' : 'text-[#FFF3E5]'
             }`}
           >
             PAHAD
           </span>
           <span
             className={`font-serif italic font-semibold ${
-              isDark ? 'text-pahad-gold-dark' : 'text-pahad-gold'
+              isDarkText ? 'text-pahad-gold-dark' : 'text-pahad-gold'
             } ml-0.5 text-xl`}
           >
             .co
@@ -95,7 +106,7 @@ export const MountainLogo: React.FC<MountainLogoProps> = ({
         {showSubtitle && (
           <span
             className={`font-sans uppercase font-medium mt-0.5 ${currentSize.sub} ${
-              isDark ? 'text-pahad-charcoal/70' : 'text-[#FFF0E1]/80'
+              isDarkText ? 'text-pahad-charcoal/70' : 'text-[#FFF3E5]/80'
             }`}
           >
             EVENTS • EXPERIENCES • MEMORIES
