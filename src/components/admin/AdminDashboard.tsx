@@ -19,7 +19,9 @@ import {
   KeyRound, 
   Home,
   Check,
-  AlertCircle
+  AlertCircle,
+  Loader2,
+  Upload
 } from 'lucide-react';
 import { 
   ClientQueryItem, 
@@ -81,6 +83,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [imageFeatured, setImageFeatured] = useState(false);
   const [imageOrder, setImageOrder] = useState(0);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [filePreviewUrl, setFilePreviewUrl] = useState<string | null>(null);
+  const [isSavingGallery, setIsSavingGallery] = useState(false);
 
   // Change Password State
   const [currentPassword, setCurrentPassword] = useState('');
@@ -254,6 +258,26 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     }
   };
 
+  // Handle File Selection
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+    setSelectedFile(file);
+    if (file) {
+      if (filePreviewUrl) URL.revokeObjectURL(filePreviewUrl);
+      const url = URL.createObjectURL(file);
+      setFilePreviewUrl(url);
+    } else {
+      if (filePreviewUrl) URL.revokeObjectURL(filePreviewUrl);
+      setFilePreviewUrl(null);
+    }
+  };
+
+  const removeSelectedFile = () => {
+    if (filePreviewUrl) URL.revokeObjectURL(filePreviewUrl);
+    setSelectedFile(null);
+    setFilePreviewUrl(null);
+  };
+
   // Reset Gallery Form
   const resetGalleryForm = () => {
     setImageTitle('');
@@ -264,7 +288,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     setImageCaption('');
     setImageFeatured(false);
     setImageOrder(0);
-    setSelectedFile(null);
+    removeSelectedFile();
     setEditingImage(null);
     setIsAddImageOpen(false);
   };
@@ -277,25 +301,21 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       return;
     }
 
+    if (!editingImage && !selectedFile && !imageUrl.trim()) {
+      alert('Please choose an image file or provide an image URL.');
+      return;
+    }
+
+    setIsSavingGallery(true);
+
     try {
       if (editingImage) {
-        // Update
-        await api.gallery.update(editingImage.id, {
-          title: imageTitle.trim(),
-          category: imageCategory,
-          location: imageLocation.trim(),
-          image_url: imageUrl.trim() || editingImage.image_url,
-          aspect: imageAspect,
-          caption: imageCaption.trim(),
-          is_featured: imageFeatured ? 1 : 0,
-          display_order: Number(imageOrder)
-        });
-        showNotification('Gallery image updated successfully.');
-      } else {
-        // Add
+        // Update (supports new file upload or metadata/URL update)
         if (selectedFile) {
           const formData = new FormData();
           formData.append('imageFile', selectedFile);
+          formData.append('image', selectedFile);
+          formData.append('file', selectedFile);
           formData.append('title', imageTitle.trim());
           formData.append('category', imageCategory);
           formData.append('location', imageLocation.trim());
@@ -303,17 +323,43 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           formData.append('caption', imageCaption.trim());
           formData.append('isFeatured', imageFeatured ? 'true' : 'false');
           formData.append('displayOrder', String(imageOrder));
+          await api.gallery.update(editingImage.id, formData);
+        } else {
+          await api.gallery.update(editingImage.id, {
+            title: imageTitle.trim(),
+            category: imageCategory,
+            location: imageLocation.trim(),
+            image_url: imageUrl.trim() || editingImage.image_url,
+            aspect: imageAspect,
+            caption: imageCaption.trim(),
+            is_featured: imageFeatured ? 1 : 0,
+            display_order: Number(imageOrder)
+          });
+        }
+        showNotification('Gallery image updated successfully.');
+      } else {
+        // Add
+        if (selectedFile) {
+          const formData = new FormData();
+          formData.append('imageFile', selectedFile);
+          formData.append('image', selectedFile);
+          formData.append('file', selectedFile);
+          formData.append('title', imageTitle.trim());
+          formData.append('category', imageCategory);
+          formData.append('location', imageLocation.trim());
+          formData.append('aspect', imageAspect);
+          formData.append('caption', imageCaption.trim());
+          formData.append('isFeatured', imageFeatured ? 'true' : 'false');
+          formData.append('displayOrder', String(imageOrder));
+          if (imageUrl.trim()) formData.append('imageUrl', imageUrl.trim());
           await api.gallery.add(formData);
         } else {
-          if (!imageUrl.trim()) {
-            alert('Please provide an image URL or choose a file to upload.');
-            return;
-          }
           await api.gallery.add({
             title: imageTitle.trim(),
             category: imageCategory,
             location: imageLocation.trim(),
             imageUrl: imageUrl.trim(),
+            image_url: imageUrl.trim(),
             aspect: imageAspect,
             caption: imageCaption.trim(),
             isFeatured: imageFeatured,
@@ -328,11 +374,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       loadStats();
     } catch (err: any) {
       alert(err.message || 'Failed to save gallery image');
+    } finally {
+      setIsSavingGallery(false);
     }
   };
 
   // Open Edit Gallery Modal
   const openEditGalleryModal = (img: GalleryImageItem) => {
+    removeSelectedFile();
     setEditingImage(img);
     setImageTitle(img.title || '');
     setImageCategory(img.category || 'Weddings');
@@ -1238,29 +1287,85 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 </div>
               </div>
 
-              {/* Image Source (URL or File Upload) */}
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-pahad-green dark:text-[#D9B477] mb-1">
-                  Image URL
-                </label>
-                <input
-                  type="text"
-                  value={imageUrl}
-                  onChange={(e) => setImageUrl(e.target.value)}
-                  placeholder="https://images.unsplash.com/... or /hero-wedding.jpg"
-                  className="w-full px-3.5 py-2 rounded-xl border border-[#D9BB87]/50 dark:border-[#D9B477]/30 text-xs bg-[#FBF6F0]/60 dark:bg-[#083D30] text-pahad-charcoal dark:text-[#FFF3E5] focus:outline-none"
-                />
-                {!editingImage && (
-                  <div className="mt-2">
-                    <span className="text-[11px] text-pahad-charcoal/60 dark:text-[#FFF3E5]/60 block mb-1">Or upload image file:</span>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
-                      className="text-xs text-pahad-charcoal dark:text-[#FFF3E5] file:mr-2 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-pahad-green/10 dark:file:bg-[#083D30] file:text-pahad-green dark:file:text-[#D9B477]"
-                    />
-                  </div>
-                )}
+              {/* Image Source (File Upload or URL) */}
+              <div className="space-y-3">
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-pahad-green dark:text-[#D9B477] mb-1.5">
+                    Photograph File <span className="text-[11px] font-normal opacity-80">(Upload from Device)</span>
+                  </label>
+
+                  {selectedFile ? (
+                    <div className="flex items-center gap-3 p-3 rounded-2xl border border-pahad-gold/60 dark:border-[#D9B477]/40 bg-[#FBF6F0] dark:bg-[#083D30]">
+                      {filePreviewUrl ? (
+                        <img 
+                          src={filePreviewUrl} 
+                          alt="Preview" 
+                          className="w-14 h-14 object-cover rounded-xl border border-pahad-gold/40 shrink-0" 
+                        />
+                      ) : (
+                        <div className="w-14 h-14 rounded-xl bg-pahad-green/10 dark:bg-[#062F26] flex items-center justify-center shrink-0 text-pahad-gold">
+                          <ImageIcon className="w-6 h-6" />
+                        </div>
+                      )}
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs font-bold text-pahad-green dark:text-[#FFF3E5] truncate">
+                          {selectedFile.name}
+                        </p>
+                        <p className="text-[11px] text-pahad-charcoal/60 dark:text-[#FFF3E5]/60">
+                          {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB • Ready for publication
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={removeSelectedFile}
+                        className="px-2.5 py-1 text-xs rounded-full bg-red-100 hover:bg-red-200 dark:bg-red-950/60 dark:hover:bg-red-900/80 text-red-700 dark:text-red-300 font-semibold transition-colors"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="relative border-2 border-dashed border-[#D9BB87]/60 dark:border-[#D9B477]/40 rounded-2xl p-4 text-center hover:border-pahad-green dark:hover:border-pahad-gold transition-colors bg-[#FBF6F0]/40 dark:bg-[#083D30]/40 group cursor-pointer">
+                      <input
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp,image/jpg"
+                        onChange={handleFileChange}
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                      />
+                      <div className="flex flex-col items-center justify-center pointer-events-none">
+                        <div className="w-10 h-10 rounded-full bg-pahad-green/10 dark:bg-[#0B4636] flex items-center justify-center text-pahad-green dark:text-[#D9B477] mb-2 group-hover:scale-110 transition-transform">
+                          <Upload className="w-5 h-5" />
+                        </div>
+                        <span className="text-xs font-semibold text-pahad-green dark:text-[#FFF3E5]">
+                          Choose photograph from your computer
+                        </span>
+                        <span className="text-[11px] text-pahad-charcoal/60 dark:text-[#FFF3E5]/60 mt-0.5">
+                          Supports JPG, PNG, WEBP up to 10MB
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="relative flex py-1 items-center">
+                  <div className="flex-grow border-t border-[#D9BB87]/30 dark:border-[#D9B477]/20"></div>
+                  <span className="shrink-0 mx-3 text-[10px] uppercase font-bold tracking-wider text-pahad-charcoal/50 dark:text-[#FFF3E5]/50">Or provide public URL</span>
+                  <div className="flex-grow border-t border-[#D9BB87]/30 dark:border-[#D9B477]/20"></div>
+                </div>
+
+                <div>
+                  <input
+                    type="text"
+                    value={imageUrl}
+                    onChange={(e) => setImageUrl(e.target.value)}
+                    placeholder="https://images.unsplash.com/... or /hero-wedding.jpg"
+                    className="w-full px-3.5 py-2 rounded-xl border border-[#D9BB87]/50 dark:border-[#D9B477]/30 text-xs bg-[#FBF6F0]/60 dark:bg-[#083D30] text-pahad-charcoal dark:text-[#FFF3E5] focus:outline-none focus:ring-1 focus:ring-pahad-green"
+                  />
+                  {editingImage && !selectedFile && imageUrl && (
+                    <span className="text-[11px] text-pahad-charcoal/60 dark:text-[#FFF3E5]/60 block mt-1">
+                      Existing photo will be preserved unless you choose a new file or enter a new URL.
+                    </span>
+                  )}
+                </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1308,16 +1413,27 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               <div className="pt-3 flex gap-3">
                 <button
                   type="button"
+                  disabled={isSavingGallery}
                   onClick={resetGalleryForm}
-                  className="flex-1 py-2.5 rounded-full bg-gray-100 dark:bg-white/10 text-gray-700 dark:text-[#FFF3E5] text-xs font-semibold hover:bg-gray-200 dark:hover:bg-white/20 transition-colors"
+                  className="flex-1 py-2.5 rounded-full bg-gray-100 dark:bg-white/10 text-gray-700 dark:text-[#FFF3E5] text-xs font-semibold hover:bg-gray-200 dark:hover:bg-white/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 py-2.5 rounded-full bg-pahad-green dark:bg-[#043C2E] border border-pahad-gold/40 text-[#FFF0E1] text-xs font-semibold hover:bg-pahad-green-hover transition-colors shadow-subtle"
+                  disabled={isSavingGallery}
+                  className="flex-1 py-2.5 rounded-full bg-pahad-green dark:bg-[#043C2E] border border-pahad-gold/40 text-[#FFF0E1] text-xs font-semibold hover:bg-pahad-green-hover transition-colors shadow-subtle disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
-                  {editingImage ? 'Update Photograph' : 'Publish Photograph'}
+                  {isSavingGallery ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin text-pahad-gold" />
+                      <span>Uploading & Publishing...</span>
+                    </>
+                  ) : editingImage ? (
+                    'Update Photograph'
+                  ) : (
+                    'Publish Photograph'
+                  )}
                 </button>
               </div>
             </form>

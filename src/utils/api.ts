@@ -145,16 +145,23 @@ export const api = {
 
     add: async (body: FormData | Record<string, unknown>): Promise<{ success: boolean; id: string | number; imageUrl: string; message: string }> => {
       if (body instanceof FormData) {
-        const file = body.get('image') as File | null;
-        const title = (body.get('title') as string) || 'Gallery Photograph';
-        const description = (body.get('caption') as string) || (body.get('description') as string) || '';
-        const category = (body.get('category') as string) || 'Weddings';
-        const displayOrder = parseInt((body.get('display_order') as string) || '0', 10);
+        // Extract file supporting 'imageFile', 'image', or 'file' form field keys
+        const rawFile = body.get('imageFile') || body.get('image') || body.get('file');
+        const file = (rawFile && typeof rawFile === 'object' && 'size' in rawFile && (rawFile as File).size > 0)
+          ? (rawFile as File)
+          : null;
 
-        let imageUrl = (body.get('image_url') as string) || '';
+        const title = (body.get('title') as string) || 'Gallery Photograph';
+        const location = (body.get('location') as string) || '';
+        const caption = (body.get('caption') as string) || (body.get('description') as string) || '';
+        const description = location ? (caption ? `${caption} • ${location}` : location) : caption;
+        const category = (body.get('category') as string) || 'Weddings';
+        const displayOrder = parseInt((body.get('displayOrder') as string) || (body.get('display_order') as string) || '0', 10);
+
+        let imageUrl = (body.get('imageUrl') as string) || (body.get('image_url') as string) || '';
         let storagePath: string | undefined = undefined;
 
-        if (file && file.size > 0) {
+        if (file) {
           const uploadRes = await galleryApi.uploadImageFile(file);
           imageUrl = uploadRes.publicUrl;
           storagePath = uploadRes.storagePath;
@@ -181,12 +188,16 @@ export const api = {
         };
       } else {
         const record = body as Record<string, any>;
+        const location = record.location || '';
+        const caption = record.caption || record.description || '';
+        const description = location ? (caption ? `${caption} • ${location}` : location) : caption;
+
         const created = await galleryApi.add({
           image_url: record.image_url || record.imageUrl,
           title: record.title,
-          description: record.caption || record.description,
+          description,
           category: record.category || 'Weddings',
-          display_order: record.display_order || 0
+          display_order: record.display_order || record.displayOrder || 0
         });
         return {
           success: true,
@@ -197,9 +208,43 @@ export const api = {
       }
     },
 
-    update: async (id: string | number, data: Partial<GalleryImageItem>): Promise<{ success: boolean; message: string }> => {
-      await galleryApi.update(id, data);
-      return { success: true, message: 'Gallery item updated successfully.' };
+    update: async (id: string | number, data: Partial<GalleryImageItem> | FormData): Promise<{ success: boolean; message: string }> => {
+      if (data instanceof FormData) {
+        const rawFile = data.get('imageFile') || data.get('image') || data.get('file');
+        const file = (rawFile && typeof rawFile === 'object' && 'size' in rawFile && (rawFile as File).size > 0)
+          ? (rawFile as File)
+          : null;
+
+        const updates: Partial<GalleryImageItem> = {};
+        const title = data.get('title') as string | null;
+        if (title) updates.title = title.trim();
+        const category = data.get('category') as string | null;
+        if (category) updates.category = category;
+        const caption = (data.get('caption') || data.get('description')) as string | null;
+        const location = data.get('location') as string | null;
+        if (caption !== null || location !== null) {
+          const c = caption || '';
+          const l = location || '';
+          updates.description = l ? (c ? `${c} • ${l}` : l) : c;
+        }
+        const displayOrder = data.get('displayOrder') || data.get('display_order');
+        if (displayOrder !== null) updates.display_order = Number(displayOrder);
+
+        let imageUrl = (data.get('imageUrl') || data.get('image_url')) as string | null;
+        if (file) {
+          const uploadRes = await galleryApi.uploadImageFile(file);
+          updates.image_url = uploadRes.publicUrl;
+          updates.storage_path = uploadRes.storagePath;
+        } else if (imageUrl) {
+          updates.image_url = imageUrl.trim();
+        }
+
+        await galleryApi.update(id, updates);
+        return { success: true, message: 'Gallery item updated successfully.' };
+      } else {
+        await galleryApi.update(id, data);
+        return { success: true, message: 'Gallery item updated successfully.' };
+      }
     },
 
     delete: async (id: string | number, storagePath?: string): Promise<{ success: boolean; message: string }> => {
